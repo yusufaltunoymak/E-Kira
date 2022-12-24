@@ -40,7 +40,6 @@ class AddFragment : Fragment() {
         _binding = FragmentAddBinding.inflate(layoutInflater, container, false)
         val view = binding.root
         return view
-        print("fdslaflç")
     }
 
 
