@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/eKira"
+        android:alpha="0"
         android:layout_width="0dp"
         android:layout_height="382dp"
         android:background="@drawable/logo"

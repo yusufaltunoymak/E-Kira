@@ -18,6 +18,10 @@ interface RestApi {
     fun checkAuth(): Call<ApiResponse<AuthCheckRes>>
 
     @Headers("Content-Type: application/json")
+    @GET("v1/auth/logout")
+    fun logoutAuth(): Call<ApiResponse<String>>
+
+    @Headers("Content-Type: application/json")
     @GET("v1/get-cities/1")
     fun getCities(): Call<ApiResponse<List<City>>>
 

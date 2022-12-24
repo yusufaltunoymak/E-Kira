@@ -1,5 +1,4 @@
 import android.content.Context
-import com.example.splash.BuildConfig
 import com.example.splash.api.SessionManager
 import okhttp3.*
 import java.io.IOException
@@ -22,7 +21,6 @@ class AuthInterceptor : Interceptor {
                     "Bearer $token"
                 )
         }
-        println("deneme AuthInterceptor")
         return chain.proceed(requestBuilder.build())
     }
 }
