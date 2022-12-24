@@ -7,6 +7,6 @@ data class User(
     @SerializedName("lastName") val lastName: String = "",
     @SerializedName("createdDate") val createdDate: String = "",
     @SerializedName("validated") val validated: Boolean = false,
-    @SerializedName("userId") val userId: String = "",
+    @SerializedName("id") val userId: String = "",
     @SerializedName("email") val email: String = ""
 )
