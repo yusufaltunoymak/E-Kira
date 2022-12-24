@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.splash.api.RestApiService
+import com.example.splash.api.SessionManager
 import com.example.splash.api.models.LoginPost
 import com.example.splash.api.models.RegisterPost
 import com.example.splash.databinding.ActivityRegisterBinding
@@ -20,6 +21,22 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        val sm = SessionManager(this@RegisterActivity)
+        val token = sm.fetchAuthToken()
+        if (token != null) {
+            if(token.length > 5) {
+                val apiService = RestApiService(this@RegisterActivity)
+                apiService.checkAuth() {
+                    if(it?.isSuccess == true) {
+                        val intent = Intent(this@RegisterActivity,MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
     fun signInClicked(view: View) {
@@ -31,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                 .show()
         }
 
-        val apiService = RestApiService()
+        val apiService = RestApiService(this@RegisterActivity)
         val data = LoginPost(  email = email.toString(),
             password = password.toString() )
 
@@ -39,10 +56,17 @@ class RegisterActivity : AppCompatActivity() {
             println(it)
             if (it?.isSuccess == true) {
                 println(it?.result)
-                var str: String = "Hoş Geldin, %s %s".format(it.result?.user?.firstName, it.result?.user?.lastName)
-                Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
-                val intent = Intent(this@RegisterActivity,MainActivity::class.java)
-                startActivity(intent)
+                if(it?.result != null) {
+                    val sm = SessionManager(this@RegisterActivity)
+                    sm.saveAuthToken(it?.result.accessToken)
+                    var str: String = "Hoş Geldin, %s %s".format(
+                        it.result?.user?.firstName,
+                        it.result?.user?.lastName
+                    )
+                    Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
             } else {
                 Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
             }
@@ -57,7 +81,7 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this@RegisterActivity, "Enter email and password", Toast.LENGTH_LONG)
                 .show()
         } else {
-            val apiService = RestApiService()
+            val apiService = RestApiService(this@RegisterActivity)
             val data = RegisterPost(  email = email.toString(),
                 password = password.toString() )
 
@@ -65,6 +89,8 @@ class RegisterActivity : AppCompatActivity() {
                 println(it)
                 if (it?.isSuccess == true) {
                     println(it?.result)
+                    val sm = SessionManager(this@RegisterActivity)
+                    it?.result?.let { it1 -> sm.saveAuthToken(it1.accessToken) }
                     var str: String = "Hoş Geldin, %s".format(it.result?.user?.email)
                     Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
                     val intent = Intent(this@RegisterActivity,MainActivity::class.java)
