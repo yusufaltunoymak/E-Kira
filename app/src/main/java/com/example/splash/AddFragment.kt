@@ -37,7 +37,10 @@ class AddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false)
+        _binding = FragmentAddBinding.inflate(layoutInflater, container, false)
+        val view = binding.root
+        return view
+        print("fdslaflç")
     }
 
 
@@ -107,8 +110,7 @@ class AddFragment : Fragment() {
         ) { result ->
             if (result) {
                 //permission granted
-                val intentToGallery =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 activityResultLauncher.launch(intentToGallery)
             } else {
                 //permission denied
