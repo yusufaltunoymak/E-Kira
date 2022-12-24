@@ -8,7 +8,7 @@
     tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/selectImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -28,9 +28,9 @@
         android:ems="10"
         android:hint="E Mail"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintEnd_toEndOf="@+id/selectImage"
+        app:layout_constraintStart_toStartOf="@+id/selectImage"
+        app:layout_constraintTop_toBottomOf="@+id/selectImage" />
 
     <EditText
         android:id="@+id/passwordText"
@@ -40,8 +40,8 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/selectImage"
+        app:layout_constraintStart_toStartOf="@+id/selectImage"
         app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
     <Button

@@ -1,5 +1,6 @@
 package com.example.splash
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
             eKira.animate().setDuration(1500).alpha(1f).withEndAction{
                 val intent = Intent(this@SplashActivity, RegisterActivity::class.java)
                 startActivity(intent)
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                 finish()
             }
         }
