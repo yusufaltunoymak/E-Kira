@@ -67,7 +67,7 @@ class RestApiService {
                         isSuccess = false,
                         error = t.message.toString(),
                         headers = null,
-                        result = AuthCheckRes(user = User())
+                        result = AuthCheckRes()
                     ))
                 }
                 override fun onResponse( call: Call<ApiResponse<AuthCheckRes>>, response: Response<ApiResponse<AuthCheckRes>>) {
@@ -175,6 +175,30 @@ class RestApiService {
                     ))
                 }
                 override fun onResponse( call: Call<ApiResponse<List<Quarter>>>, response: Response<ApiResponse<List<Quarter>>>) {
+                    println(response.body().toString())
+                    val authResult = response.body()
+                    println(authResult)
+                    onResult(authResult)
+                }
+            }
+        )
+    }
+
+    fun logoutAuth(onResult: (ApiResponse<String>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.logoutAuth().enqueue(
+            object : Callback<ApiResponse<String>> {
+                override fun onFailure(call: Call<ApiResponse<String>>, t: Throwable) {
+                    println(t.message)
+                    //onResult(null)
+                    onResult(ApiResponse(
+                        isSuccess = false,
+                        error = t.message.toString(),
+                        headers = null,
+                        result = "NO",
+                    ))
+                }
+                override fun onResponse( call: Call<ApiResponse<String>>, response: Response<ApiResponse<String>>) {
                     println(response.body().toString())
                     val authResult = response.body()
                     println(authResult)

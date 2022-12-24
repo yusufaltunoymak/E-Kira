@@ -21,22 +21,6 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        val sm = SessionManager(this@RegisterActivity)
-        val token = sm.fetchAuthToken()
-        if (token != null) {
-            if(token.length > 5) {
-                val apiService = RestApiService(this@RegisterActivity)
-                apiService.checkAuth() {
-                    if(it?.isSuccess == true) {
-                        val intent = Intent(this@RegisterActivity,MainActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
     }
 
     fun signInClicked(view: View) {
@@ -65,7 +49,11 @@ class RegisterActivity : AppCompatActivity() {
                     )
                     Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
                     val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    intent.putExtra("firstName", it?.result?.user?.firstName)
+                    intent.putExtra("lastName", it?.result?.user?.lastName)
+                    intent.putExtra("email", it?.result?.user?.email)
                     startActivity(intent)
+                    finish()
                 }
             } else {
                 Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
@@ -94,7 +82,11 @@ class RegisterActivity : AppCompatActivity() {
                     var str: String = "Hoş Geldin, %s".format(it.result?.user?.email)
                     Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
                     val intent = Intent(this@RegisterActivity,MainActivity::class.java)
+                    intent.putExtra("firstName", it?.result?.user?.firstName)
+                    intent.putExtra("lastName", it?.result?.user?.lastName)
+                    intent.putExtra("email", it?.result?.user?.email)
                     startActivity(intent)
+                    finish()
                 } else {
                     Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
                 }
