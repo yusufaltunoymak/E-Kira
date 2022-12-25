@@ -41,14 +41,24 @@ class AddFragment : Fragment() {
     val Districts : MutableMap<String, Int> = mutableMapOf()
     val Quarters : MutableMap<String, Int> = mutableMapOf()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        registerLauncher()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAddBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentAddBinding.inflate(layoutInflater,container,false)
         val view = binding.root
+        return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.selectImage.setOnClickListener { selectImage(view) }
         val apiService = this@AddFragment.context?.let { RestApiService(it) }
 
         UpdateCitySpinner(true)
@@ -148,7 +158,7 @@ class AddFragment : Fragment() {
             }
         }
 
-        return view
+
     }
 
 
@@ -174,9 +184,9 @@ class AddFragment : Fragment() {
                     permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
                 }
             } else {
-                val intentToGallery =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                activityResultLauncher.launch(intentToGallery)
+                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+               // val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                // activityResultLauncher.launch(intentToGallery)
 
             }
 
@@ -219,6 +229,7 @@ class AddFragment : Fragment() {
             if (result) {
                 //permission granted
                 val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+
                 activityResultLauncher.launch(intentToGallery)
             } else {
                 //permission denied
@@ -339,4 +350,5 @@ class AddFragment : Fragment() {
             )
         }
     }
+
 }

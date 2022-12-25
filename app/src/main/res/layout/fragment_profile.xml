@@ -106,13 +106,23 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonSifre"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="44dp"
+        android:text="PROFİLİNİ DÜZENLE" />
+
+    <Button
+        android:id="@+id/buttonBakiye"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BAKİYE YÜKLE" />
+
+    <Button
+        android:id="@+id/buttonLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="logout"
-        android:text="LOG OUT" />
+        android:text="ÇIKIŞ YAP" />
 
 
 </LinearLayout>
