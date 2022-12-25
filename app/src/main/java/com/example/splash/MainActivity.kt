@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(binding.bottomNavigationView,navController)
     }
 
+
     fun logout(view : View) {
         var sm = SessionManager(this@MainActivity)
         val apiService = RestApiService(this@MainActivity)
