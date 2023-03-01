@@ -13,5 +13,5 @@ dependencyResolutionManagement {
         maven { url "https://jitpack.io" }
     }
 }
-rootProject.name = "Splash"
+rootProject.name = "E-Kira"
 include ':app'
