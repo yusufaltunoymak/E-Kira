@@ -1,24 +1,72 @@
 package com.example.splash
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
+import android.view.*
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.splash.api.RestApiService
-import com.example.splash.api.SessionManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.splash.api.models.IlanModel
+import com.example.splash.databinding.FragmentMainBinding
 
 
 class MainFragment : Fragment() {
-
+    private lateinit var adapter : RecyclerViewAdapter
+    private lateinit var binding : FragmentMainBinding
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
+
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        binding = FragmentMainBinding.inflate(inflater,container,false)
+
+        return binding.root
+
+
+
+
     }
-}
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.layoutManager = layoutManager
+
+        val card = view.findViewById<TextView>(R.id.submit)
+
+        arguments?.let {
+            val ilanPeriyodu = MainFragmentArgs.fromBundle(it).periyot
+             card.text = ilanPeriyodu
+
+
+
+        }
+
+        val ilanListesi = listOf(
+            IlanModel("Sefiller", "Victor Hugo",R.drawable.logo,"250 TL","Aylık"),
+            IlanModel("Beyaz Diş", "Jack London",R.drawable.logo,"360 TL","Yıllık"),
+            IlanModel("Suç ve Ceza", "Fyodor Dostoevsky",R.drawable.logo,"222 TL","Günlük")
+        )
+
+
+
+
+        adapter = RecyclerViewAdapter(ArrayList(ilanListesi), object: RecyclerViewAdapter.Listener {
+            override fun onItemClick(ilanModel: IlanModel) {
+                // Tıklanan ilan modeline göre yapılacak işlemler
+            }
+        })
+        binding.recyclerView.adapter = adapter
+
+
+    }
+
+
+
+    }

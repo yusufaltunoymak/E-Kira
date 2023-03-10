@@ -22,6 +22,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.Navigation
 import com.example.splash.api.RestApiService
 import com.example.splash.databinding.FragmentAddBinding
 import com.google.android.material.snackbar.Snackbar
@@ -35,11 +36,14 @@ class AddFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
+    private val periyot = ArrayList<String>()
+    private lateinit var veriAdaptoru : ArrayAdapter<String>
 
     val Cities : MutableMap<String, Int> = mutableMapOf()
     val Towns : MutableMap<String, Int> = mutableMapOf()
     val Districts : MutableMap<String, Int> = mutableMapOf()
     val Quarters : MutableMap<String, Int> = mutableMapOf()
+    var selectedQuarter : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +66,37 @@ class AddFragment : Fragment() {
         val apiService = this@AddFragment.context?.let { RestApiService(it) }
 
         UpdateCitySpinner(true)
+
+        periyot.add("Günlük")
+        periyot.add("Haftalık")
+        periyot.add("Aylık")
+        periyot.add("Yıllık")
+
+        veriAdaptoru = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,periyot)
+        binding.periyotSpinner.adapter = veriAdaptoru
+
+        veriAdaptoru.insert("Kira Periyodu Seçin",0)
+        binding.periyotSpinner.adapter = veriAdaptoru
+        binding.periyotSpinner.setSelection(0)
+
+        binding.periyotSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+        binding.submit.setOnClickListener {
+            val action = AddFragmentDirections.actionAddFragmentToMainFragment(veriAdaptoru.toString())
+            Navigation.findNavController(it).navigate(action)
+
+        }
+
+
 
         apiService?.getCities() {
             it?.result?.forEach {
@@ -103,6 +138,7 @@ class AddFragment : Fragment() {
                     UpdateDistrictSpinner()
                     UpdateTownSpinner()
                 }
+                binding.submit.visibility = View.INVISIBLE
             }
         }
         townSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -131,6 +167,7 @@ class AddFragment : Fragment() {
                     UpdateQuarterSpinner()
                     UpdateDistrictSpinner()
                 }
+                binding.submit.visibility = View.INVISIBLE
             }
         }
         districtSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -155,9 +192,23 @@ class AddFragment : Fragment() {
                     Quarters.clear()
                     UpdateQuarterSpinner()
                 }
+                binding.submit.visibility = View.INVISIBLE
             }
         }
+        quarterSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                var selectedItem = parent?.getItemAtPosition(position).toString()
+                var id : Int? = Quarters.get(selectedItem)
+                if(position > 0 && id != null && id > 0) {
+                    binding.submit.visibility = View.VISIBLE
+                    selectedQuarter = id
+                }
+            }
+        }
 
     }
 

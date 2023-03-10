@@ -37,6 +37,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
+
+
+
             <EditText
                 android:id="@+id/commentHeader"
                 android:layout_width="350dp"
@@ -44,6 +48,9 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="1dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +65,11 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="1dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:lines="6"
+                android:scrollbars="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +77,35 @@
                 android:hint="İlan Açıklaması Giriniz :"
                 android:inputType="textMultiLine"
                 />
+
+            <EditText
+                android:id="@+id/kiraFiyati"
+                android:layout_width="350dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="1dp"
+                android:background="@drawable/custom_input"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                android:ems="10"
+                android:hint="Kira Bedelinizi Giriniz :"
+                android:inputType="number" />
+
+            <Spinner
+                android:id="@+id/periyotSpinner"
+                android:layout_width="350dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectImage" />
 
             <Spinner
                 android:id="@+id/cities"
@@ -113,12 +154,15 @@
 
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/submit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="1dp"
+                android:layout_marginStart="125dp"
                 android:layout_marginBottom="28dp"
                 android:gravity="center"
-                android:text="Button"
+                android:text="Gönder"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"

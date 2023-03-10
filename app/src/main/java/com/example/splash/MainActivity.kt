@@ -3,14 +3,12 @@ package com.example.splash
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
-import com.example.splash.api.models.User
 import com.example.splash.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navController = Navigation.findNavController(this,R.id.activity_main_nav_host_fragment)
+        navController = Navigation.findNavController(this,R.id.navHost)
         setupWithNavController(binding.bottomNavigationView,navController)
     }
 
