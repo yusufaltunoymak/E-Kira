@@ -72,7 +72,7 @@ class ilanDetayFragment : Fragment() {
 
         println("messages")
 
-        println("ofofof")
+        println("ofofoffffffg")
         ///
 
     }
