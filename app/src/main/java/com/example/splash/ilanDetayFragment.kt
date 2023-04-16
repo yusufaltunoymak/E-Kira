@@ -69,6 +69,7 @@ class ilanDetayFragment : Fragment() {
         println(gelenBaslik)
         println(gelenBaslik)
 
+
         // binding.ilanDetayimage.setImageURI()
 
 
