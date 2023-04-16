@@ -309,24 +309,39 @@ class AddFragment : Fragment() {
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val intentFromResult = result.data
                 if (intentFromResult != null) {
-                    selectedPicture = intentFromResult.data
-                    try {
-                        if (Build.VERSION.SDK_INT >= 28) {
-                            val source = ImageDecoder.createSource(
-                                requireActivity().contentResolver,
-                                selectedPicture!!
-                            )
-                            selectedBitmap = ImageDecoder.decodeBitmap(source)
-                            binding.selectImage.setImageBitmap(selectedBitmap)
-                        } else {
-                            selectedBitmap = MediaStore.Images.Media.getBitmap(
-                                requireActivity().contentResolver,
-                                selectedPicture
-                            )
-                            binding.selectImage.setImageBitmap(selectedBitmap)
+                    val clipData = intentFromResult.clipData
+                    if (clipData != null) {
+                        // Multiple images selected
+
+                        val count = clipData.itemCount
+                        val selectedPictures = mutableListOf<Uri>()
+                        for (i in 0 until count) {
+                            selectedPictures.add(clipData.getItemAt(i).uri)
                         }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+                        // Handle selected pictures here
+                    } else {
+                        // Single image selected
+                        val selectedPicture = intentFromResult.data
+                        try {
+                            if (Build.VERSION.SDK_INT >= 28) {
+                                val source = ImageDecoder.createSource(
+                                    requireActivity().contentResolver,
+                                    selectedPicture!!
+                                )
+                                val selectedBitmap = ImageDecoder.decodeBitmap(source)
+                                binding.selectImage.setImageBitmap(selectedBitmap)
+
+                            } else {
+                                val selectedBitmap = MediaStore.Images.Media.getBitmap(
+                                    requireActivity().contentResolver,
+                                    selectedPicture
+                                )
+                                binding.selectImage.setImageBitmap(selectedBitmap)
+                            }
+                            // Handle selected picture here
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
                     }
                 }
             }
@@ -336,7 +351,9 @@ class AddFragment : Fragment() {
         ) { result ->
             if (result) {
                 //permission granted
-                val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val intentToGallery = Intent(Intent.ACTION_GET_CONTENT)
+                intentToGallery.type = "image/*"
+                intentToGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
 
                 activityResultLauncher.launch(intentToGallery)
             } else {
