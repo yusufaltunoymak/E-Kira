@@ -1,47 +1,52 @@
 package com.example.splash
 
-import android.graphics.BitmapFactory
+import android.content.Intent
+import android.provider.Settings.Secure.putString
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
+import androidx.core.net.toUri
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
-import com.example.splash.api.models.IlanModel
+
 import com.example.splash.databinding.IlanCardViewBinding
+import com.squareup.picasso.Picasso
 
-class RecyclerViewAdapter(private val ilanListesi: ArrayList<IlanModel>, private val listener: Listener) : RecyclerView.Adapter<RecyclerViewAdapter.RowHolder>() {
+class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerView.Adapter<RecyclerViewAdapter.AdventHolder>() {
+    class AdventHolder(val binding: IlanCardViewBinding) : RecyclerView.ViewHolder(binding.root)
 
-    interface Listener {
-        fun onItemClick(ilanModel: IlanModel) {
-        }
-    }
-    class RowHolder(private val binding : IlanCardViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(ilanModel: IlanModel, listener: Listener) {
-            binding.root.setOnClickListener {
-                listener.onItemClick(ilanModel)
-            }
-            binding.ilanBaslik.text = ilanModel.ilanBaslik
-            binding.ilanFiyat.text = ilanModel.ilanFiyat
-            binding.ilanGorseli.setImageBitmap(BitmapFactory.decodeResource(binding.root.resources, ilanModel.ilanGorseli))
-            binding.ilanKonum.text = ilanModel.ilanKonum
-            binding.ilanPeriyot.text = ilanModel.ilanPeriyot
-
-
-
-        }
-
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdventHolder {
         val binding = IlanCardViewBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return RowHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: RowHolder, position: Int) {
-        val ilanModel = ilanListesi[position]
-        holder.bind(ilanModel,listener)
+        return AdventHolder(binding)
     }
 
     override fun getItemCount(): Int {
-        return ilanListesi.size
+        return adventList.size
     }
+
+    override fun onBindViewHolder(holder: AdventHolder, position: Int) {
+        holder.binding.ilanBaslik.text = adventList.get(position).Baslik
+        holder.binding.ilanFiyat.text = adventList.get(position).Kirafiyati
+        holder.binding.ilanKonum.text = adventList.get(position).cities
+        holder.binding.ilanPeriyot.text = adventList.get(position).Periyot
+        Picasso.get().load(adventList.get(position).downloadUrl).into(holder.binding.ilanGorseli)
+
+
+        holder.binding.satirCardView.setOnClickListener {
+            val gecis = MainFragmentDirections.actionMainFragmentToIlanDetayFragment(position, adventList.get(position).Baslik,
+                adventList.get(position).Kirafiyati.toInt(),adventList.get(position).Periyot,
+                adventList.get(position).cities,adventList.get(position).districts,
+                adventList.get(position).quarters,
+                adventList.get(position).towns,adventList.get(position).Aciklama,adventList.get(position).downloadUrl.toUri())
+
+            Navigation.findNavController(it).navigate(gecis)
+
+
+
+
+        }
+
+    }
+
 }
+
