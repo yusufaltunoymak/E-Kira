@@ -26,7 +26,15 @@ import androidx.navigation.Navigation
 import com.example.splash.api.RestApiService
 import com.example.splash.databinding.FragmentAddBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AddFragment : Fragment() {
@@ -37,6 +45,8 @@ class AddFragment : Fragment() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private val periyot = ArrayList<String>()
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var storage : FirebaseStorage
     private lateinit var veriAdaptoru : ArrayAdapter<String>
 
     val Cities : MutableMap<String, Int> = mutableMapOf()
@@ -47,6 +57,8 @@ class AddFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firestore = Firebase.firestore
+        storage = Firebase.storage
         registerLauncher()
     }
 
@@ -93,6 +105,51 @@ class AddFragment : Fragment() {
         binding.submit.setOnClickListener {
             val action = AddFragmentDirections.actionAddFragmentToMainFragment(veriAdaptoru.toString())
             Navigation.findNavController(it).navigate(action)
+
+            val uuid = UUID.randomUUID()
+            val imageName = "$uuid.jpg"
+            val reference = storage.reference
+            val imageReference = reference.child("images").child(imageName)
+
+            if (selectedPicture!=null) {
+                imageReference.putFile(selectedPicture!!).addOnSuccessListener {
+                    //download url -> firestore
+
+                    val uploadPictureReference = storage.reference.child("images").child(imageName)
+                    uploadPictureReference.downloadUrl.addOnSuccessListener {
+                        val downloadUrl = it.toString()
+                        val adventMap = hashMapOf<String,Any>()
+                        adventMap.put("downloadUrl",downloadUrl)
+                        adventMap.put("Baslik",binding.commentHeader.text.toString())
+                        adventMap.put("Aciklama",binding.commentText.text.toString())
+                        adventMap.put("KiraFiyati",binding.kiraFiyati.text.toString())
+                        adventMap.put("Periyot",binding.periyotSpinner.selectedItem.toString())
+                        adventMap.put("cities",binding.cities.selectedItem.toString())
+                        adventMap.put("towns",binding.towns.selectedItem.toString())
+                        adventMap.put("districts",binding.districts.selectedItem.toString())
+                        adventMap.put("quarters",binding.quarters.selectedItem.toString())
+                        adventMap.put("date", Timestamp.now())
+                        firestore.collection("Advents").add(adventMap).addOnSuccessListener {
+
+                        }.addOnFailureListener {
+                            Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+
+                }.addOnFailureListener {
+                    Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+
+
+
+
+
+
+
 
         }
 
@@ -236,7 +293,7 @@ class AddFragment : Fragment() {
                 }
             } else {
                 permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-               // val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                // val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 // activityResultLauncher.launch(intentToGallery)
 
             }
