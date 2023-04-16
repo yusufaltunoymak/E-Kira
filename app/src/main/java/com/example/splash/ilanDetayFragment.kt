@@ -68,12 +68,7 @@ class ilanDetayFragment : Fragment() {
         Picasso.get().load(gelenphoto).into(binding.ilanDetayimage)
         println(gelenBaslik)
         println(gelenBaslik)
-        // binding.ilanDetayimage.setImageURI()
 
-        println("messages")
-
-        println("ofofoffffffg")
-        ///
 
     }
 
