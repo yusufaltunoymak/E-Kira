@@ -71,6 +71,8 @@ class ilanDetayFragment : Fragment() {
         // binding.ilanDetayimage.setImageURI()
 
         println("messages")
+
+        println("erenamca")
         ///
 
     }
