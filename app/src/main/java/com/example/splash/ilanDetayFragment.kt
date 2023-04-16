@@ -68,8 +68,6 @@ class ilanDetayFragment : Fragment() {
         Picasso.get().load(gelenphoto).into(binding.ilanDetayimage)
         println(gelenBaslik)
         println(gelenBaslik)
-        println("asdfsdf")
-
         // binding.ilanDetayimage.setImageURI()
 
 
