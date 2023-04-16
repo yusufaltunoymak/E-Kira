@@ -40,13 +40,13 @@ class MainFragment : Fragment() {
 
         val card = view.findViewById<TextView>(R.id.submit)
 
-        arguments?.let {
-            val ilanPeriyodu = MainFragmentArgs.fromBundle(it).periyot
-             card.text = ilanPeriyodu
+       // arguments?.let {
+         //   val ilanPeriyodu = MainFragmentArgs.fromBundle(it).periyot
+           //  card.text = ilanPeriyodu
 
 
 
-        }
+        //}
 
         val ilanListesi = listOf(
             IlanModel("Sefiller", "Victor Hugo",R.drawable.logo,"250 TL","Aylık"),
