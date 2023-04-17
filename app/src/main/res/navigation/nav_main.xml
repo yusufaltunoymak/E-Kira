@@ -65,5 +65,8 @@
         <argument
             android:name="downloadurl"
             app:argType="android.net.Uri" />
+        <action
+            android:id="@+id/ilantomain"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>
