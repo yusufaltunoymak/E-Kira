@@ -7,47 +7,49 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/satirCardView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="156dp"
         android:layout_margin="10dp"
+        android:backgroundTint="#148CB9"
         app:cardCornerRadius="10dp"
-        app:contentPadding="10dp"
-        android:backgroundTint="#148CB9">
+        app:contentPadding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="380dp"
-            android:layout_height="wrap_content">
+            android:layout_width="356dp"
+            android:layout_height="133dp">
 
             <TextView
                 android:id="@+id/ilanBaslik"
-                android:layout_width="210dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="88dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="219dp"
+                android:layout_height="76dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="21dp"
                 android:maxLines="2"
                 android:text="Sahibinden Satılık flsdaflsa flösdafal"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ilanGorseli"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/ilanKonum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="9dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Şişli,İstanbul"
-                android:textSize="10sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView" />
 
             <ImageView
                 android:id="@+id/ilanGorseli"
-                android:layout_width="73dp"
-                android:layout_height="61dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="3dp"
+                android:layout_width="101dp"
+                android:layout_height="83dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,37 +57,48 @@
                 android:id="@+id/ilanFiyat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="28dp"
-                android:text="1200 tl"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:text="1200"
                 android:textAlignment="textEnd"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/ilanPeriyot"
                 android:layout_width="48dp"
                 android:layout_height="29dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="28dp"
-                android:text="Aylık"
+                android:layout_marginEnd="37dp"
+                android:layout_marginBottom="3dp"
+                android:text="3+1"
                 android:textAlignment="textEnd"
-                android:textSize="12sp"
+                android:textSize="18sp"
                 android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView3" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="45dp"
+                android:layout_height="31dp"
+                android:layout_marginBottom="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ilanFiyat"
+                app:srcCompat="@drawable/lira" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="24dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="62dp"
-                android:layout_marginBottom="4dp"
+                android:layout_width="35dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="9dp"
+                android:layout_marginBottom="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ilanGorseli"
+                app:layout_constraintEnd_toStartOf="@+id/ilanKonum"
                 app:srcCompat="@drawable/konum" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 </LinearLayout>

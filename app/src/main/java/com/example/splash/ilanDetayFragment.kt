@@ -29,7 +29,6 @@ class ilanDetayFragment : Fragment() {
     private lateinit var storage : FirebaseStorage
 
 
-
     override fun onCreateView( inflater: LayoutInflater,
                                container: ViewGroup?,
                                savedInstanceState: Bundle?
@@ -39,6 +38,8 @@ class ilanDetayFragment : Fragment() {
         val view = binding.root
         firestore = Firebase.firestore
         storage = Firebase.storage
+
+
         return view
 
     }
@@ -59,7 +60,7 @@ class ilanDetayFragment : Fragment() {
         val gelenDistricts = bundle.districts
         binding.gelenilcetextView.text = gelenDistricts
         val gelenquarters = bundle.quarters
-        binding.gelenmahallebirtextView.text = gelenquarters
+        //binding.gelenmahallebirtextView.text = gelenquarters
         val gelenTowns = bundle.towns
         binding.gelenmahalleikitextView.text = gelenTowns
         val gelenAciklama = bundle.aciklama
@@ -71,6 +72,7 @@ class ilanDetayFragment : Fragment() {
 
 
     }
+
 
 }
 
