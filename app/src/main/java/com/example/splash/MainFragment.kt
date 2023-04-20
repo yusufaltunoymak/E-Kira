@@ -91,7 +91,7 @@ class MainFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
 
         // val card = view.findViewById<TextView>(R.id.submit)
-        println("")
+
 
 
 
