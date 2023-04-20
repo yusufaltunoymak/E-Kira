@@ -24,19 +24,66 @@
             android:orientation="vertical">
 
 
-            <ImageView
-                android:id="@+id/selectImage"
-                android:layout_width="350dp"
-                android:layout_height="250dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="1dp"
-                android:src="@drawable/select"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <GridLayout
 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/selectImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/select"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_row = "0"
+                    android:layout_column = "0"/>
+                <ImageView
+                    android:id="@+id/selectImage3"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    android:src="@drawable/select"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_row = "0"
+                    android:layout_column = "1"
+                    />
+                <ImageView
+                    android:id="@+id/selectImage4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    android:src="@drawable/select"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_row = "1"
+                    android:layout_column = "0"
+                    />
+
+                <ImageView
+                    android:id="@+id/selectImage5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:src="@drawable/select"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </GridLayout>
 
 
 
@@ -167,6 +214,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent" />
+
+
 
         </LinearLayout>
 
