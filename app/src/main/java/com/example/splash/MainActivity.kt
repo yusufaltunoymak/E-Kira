@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
     fun geriDon(view : View) {
         val gecis = ilanDetayFragmentDirections.ilantomain("dfsf")
         Navigation.findNavController(view).navigate(gecis)

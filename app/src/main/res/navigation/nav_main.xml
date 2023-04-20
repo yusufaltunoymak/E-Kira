@@ -21,7 +21,11 @@
         android:id="@+id/profileFragment"
         android:name="com.example.splash.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/profiltoduzenle"
+            app:destination="@id/profilDuzenleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.splash.AddFragment"
@@ -68,5 +72,14 @@
         <action
             android:id="@+id/ilantomain"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilDuzenleFragment"
+        android:name="com.example.splash.ProfilDuzenleFragment"
+        android:label="fragment_profil_duzenle"
+        tools:layout="@layout/fragment_profil_duzenle" >
+        <action
+            android:id="@+id/duzenletoprofil"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

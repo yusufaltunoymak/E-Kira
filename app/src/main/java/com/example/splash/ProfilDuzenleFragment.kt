@@ -29,11 +29,11 @@ class ProfilDuzenleFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profil_duzenle, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.Guncelle.setOnClickListener {
-            val action = ProfilDuzenleFragmentDirections.duzenletoprofil()
-            Navigation.findNavController(it).navigate(action)
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        binding.Guncelle.setOnClickListener {
+//            val action = ProfilDuzenleFragmentDirections.duzenletoprofil()
+//            Navigation.findNavController(it).navigate(action)
+//        }
+//    }
 }
