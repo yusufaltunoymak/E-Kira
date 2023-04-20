@@ -68,7 +68,7 @@
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
-                android:layout_width="226dp"
+                android:layout_width="221dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:autofillHints=""
@@ -76,9 +76,7 @@
                 android:ems="10"
                 android:hint="İsim Giriniz"
                 android:inputType="textPersonName"
-                android:maxWidth="240sp"
                 android:maxHeight="45sp"
-                android:minWidth="225sp"
                 android:minHeight="48dp"
                 android:textSize="16sp" />
 
@@ -109,9 +107,7 @@
                 android:ems="10"
                 android:hint="Soyadınızı Giriniz"
                 android:inputType="textPersonName"
-                android:maxWidth="240sp"
                 android:maxHeight="45sp"
-                android:minWidth="225sp"
                 android:minHeight="48dp"
                 android:textSize="16sp" />
         </TableRow>
@@ -148,9 +144,7 @@
                 android:ems="10"
                 android:hint="Telefon Numaranızı Giriniz"
                 android:inputType="phone"
-                android:maxWidth="240sp"
                 android:maxHeight="45sp"
-                android:minWidth="225sp"
                 android:minHeight="48dp"
                 android:textSize="16sp" />
         </TableRow>
@@ -222,9 +216,7 @@
                 android:ems="10"
                 android:hint="Şifrenizi Giriniz"
                 android:inputType="textPassword"
-                android:maxWidth="240sp"
                 android:maxHeight="45sp"
-                android:minWidth="225sp"
                 android:minHeight="48dp"
                 android:textSize="16sp" />
         </TableRow>
@@ -255,9 +247,7 @@
                 android:ems="10"
                 android:hint="Şifreyi Tekrar Giriniz"
                 android:inputType="textPassword"
-                android:maxWidth="240sp"
                 android:maxHeight="45sp"
-                android:minWidth="225sp"
                 android:minHeight="48dp"
                 android:textSize="16sp" />
         </TableRow>
