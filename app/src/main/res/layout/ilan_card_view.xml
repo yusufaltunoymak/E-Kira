@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/satirCardView"
@@ -68,16 +71,18 @@
 
             <TextView
                 android:id="@+id/ilanPeriyot"
-                android:layout_width="48dp"
-                android:layout_height="29dp"
-                android:layout_marginEnd="37dp"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:layout_marginStart="22dp"
+                android:layout_marginEnd="28dp"
                 android:layout_marginBottom="3dp"
-                android:text="3+1"
-                android:textAlignment="textEnd"
+                android:text="Haftalık"
+                android:textAlignment="gravity"
                 android:textSize="18sp"
                 android:textStyle="normal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3" />
+                app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                app:layout_constraintStart_toEndOf="@+id/ilanKonum" />
 
             <ImageView
                 android:id="@+id/imageView3"

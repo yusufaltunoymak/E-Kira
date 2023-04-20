@@ -106,7 +106,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/buttonSifre"
+        android:id="@+id/profilduzenle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="PROFİLİNİ DÜZENLE" />

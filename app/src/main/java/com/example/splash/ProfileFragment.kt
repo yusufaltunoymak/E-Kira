@@ -8,16 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
+import com.example.splash.databinding.FragmentAddBinding
+import com.example.splash.databinding.FragmentProfileBinding
 
 
 class ProfileFragment : Fragment() {
+    private lateinit var binding : FragmentProfileBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
+        val view2 = binding.root
         // Inflate the layout for this fragment
 
 
@@ -33,11 +40,23 @@ class ProfileFragment : Fragment() {
         nameTextView.text = firstName
         emailTextView.text = email
 
-        return view
+        return view2
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.profilduzenle.setOnClickListener {
+            val action = ProfileFragmentDirections.actionProfileFragmentToProfilDuzenleFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+
+
 
     fun profile_image() {
 
     }
+}
 }
 

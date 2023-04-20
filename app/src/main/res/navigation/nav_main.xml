@@ -10,18 +10,22 @@
         android:name="com.example.splash.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
-        <argument
-            android:name="periyot"
-            app:argType="string" />
         <action
             android:id="@+id/action_mainFragment_to_ilanDetayFragment"
             app:destination="@id/ilanDetayFragment" />
+        <argument
+            android:name="periyot"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.splash.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_profilDuzenleFragment"
+            app:destination="@id/profilDuzenleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.example.splash.AddFragment"
@@ -76,5 +80,29 @@
         android:id="@+id/kiralaFragment"
         android:name="com.example.splash.KiralaFragment"
         android:label="fragment_kirala"
-        tools:layout="@layout/fragment_kirala" />
+        tools:layout="@layout/fragment_kirala" >
+        <argument android:name="downloadurl"
+            app:argType="android.net.Uri" />
+        <argument
+            android:name="baslik"
+            app:argType="string" />
+        <argument
+            android:name="kirafiyati"
+            app:argType="integer" />
+        <argument
+            android:name="aciklama"
+            app:argType="string" />
+        <argument
+            android:name="cities"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilDuzenleFragment"
+        android:name="com.example.splash.ProfilDuzenleFragment"
+        android:label="fragment_profil_duzenle"
+        tools:layout="@layout/fragment_profil_duzenle" >
+        <action
+            android:id="@+id/action_profilDuzenleFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>
