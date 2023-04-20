@@ -70,14 +70,6 @@ class ilanDetayFragment : Fragment() {
         println(gelenBaslik)
         println(gelenBaslik)
 
-<<<<<<< HEAD
-=======
-        println("messages")
-
-        println("ofofoffffffg")
-        ///
->>>>>>> 020b6d02e8e05230e87b935b8280f62428c88695
-
     }
 
 
