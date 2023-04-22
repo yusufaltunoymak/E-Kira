@@ -80,7 +80,7 @@ class ilanDetayFragment : Fragment() {
             val action = ilanDetayFragmentDirections.ilantomain("sa")
             Navigation.findNavController(it).navigate(action)
         }
-    println("222222")
+    println("1")
 
 
     }
