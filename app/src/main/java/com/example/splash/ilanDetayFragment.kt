@@ -81,7 +81,7 @@ class ilanDetayFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-println("s")
+println("ssss")
     }
 
 
