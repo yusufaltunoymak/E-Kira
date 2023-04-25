@@ -10,8 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:padding="20dp"
-        android:background="#fece2f">
+        android:background="#FFFFFF"
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/profile_image"
@@ -27,11 +27,11 @@
             android:id="@+id/full_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DENEME DENEME"
-            android:textSize="20sp"
-            android:layout_toRightOf="@+id/profile_image"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/profile_image"
+            android:text="DENEME DENEME"
+            android:textSize="20sp">
 
         </TextView>
 
@@ -39,11 +39,11 @@
             android:id="@+id/user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DENEME DENEME @gmail.com"
-            android:textSize="14sp"
-            android:layout_toRightOf="@+id/profile_image"
             android:layout_below="@+id/full_name"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/profile_image"
+            android:text="DENEME DENEME @gmail.com"
+            android:textSize="14sp">
 
         </TextView>
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:layout_marginTop="-25dp">
-        
+
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
@@ -64,12 +64,12 @@
         android:layout_margin="10dp"
         app:cardBackgroundColor="#fece2f"
         app:cardElevation="10dp">
-        
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="5dp">
-            
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -104,18 +104,6 @@
     </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/profilduzenle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="PROFİLİNİ DÜZENLE" />
-
-    <Button
-        android:id="@+id/buttonBakiye"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="BAKİYE YÜKLE" />
 
     <Button
         android:id="@+id/buttonLogOut"

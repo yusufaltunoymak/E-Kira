@@ -3,11 +3,12 @@ package com.example.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
@@ -25,6 +26,8 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
         val view2 = binding.root
+
+
         // Inflate the layout for this fragment
 
 
@@ -41,22 +44,44 @@ class ProfileFragment : Fragment() {
         emailTextView.text = email
 
         return view2
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.profilduzenle.setOnClickListener {
-            val action = ProfileFragmentDirections.actionProfileFragmentToProfilDuzenleFragment()
-            Navigation.findNavController(it).navigate(action)
-        }
+        (requireActivity() as MenuHost).addMenuProvider(object: MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.profil_duzenle, menu)
+            }
 
-
-
-
-    fun profile_image() {
-
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.profili_guncelle -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToProfilDuzenleFragment()
+                        Navigation.findNavController(binding.root).navigate(action)
+                        true
+                    }
+                    R.id.favori_ilan -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToFavoriIlan()
+                        Navigation.findNavController(binding.root).navigate(action)
+                        true
+                    }
+                    R.id.bakiye_cek -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToBakiyeCekFragment()
+                        Navigation.findNavController(binding.root).navigate(action)
+                        true
+                    }
+                }
+                return false
+            }
+        }, viewLifecycleOwner)
     }
+
 }
-}
+
+
+
+
 
