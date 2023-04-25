@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/profili_guncelle" android:title="Profili Güncelle"></item>
+    <item android:id="@+id/favori_ilan" android:title="Favori İlanlar"></item>
+    <item android:id="@+id/bakiye_cek" android:title="Bakiye Çek"></item>
+    <item android:id="@+id/cikis_yap" android:title="Çıkış Yap"></item>
+
+</menu>
