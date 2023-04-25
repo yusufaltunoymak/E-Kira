@@ -39,6 +39,7 @@ class SplashActivity : AppCompatActivity() {
 
         setContentView(binding.root)
     }
+    
 
     private fun registerAct() {
         val intent = Intent(this@SplashActivity, RegisterActivity::class.java)

@@ -25,6 +25,12 @@
         <action
             android:id="@+id/action_profileFragment_to_profilDuzenleFragment"
             app:destination="@id/profilDuzenleFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_favoriIlan"
+            app:destination="@id/favoriIlan" />
+        <action
+            android:id="@+id/action_profileFragment_to_bakiyeCekFragment"
+            app:destination="@id/bakiyeCekFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -109,4 +115,14 @@
             android:id="@+id/action_profilDuzenleFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriIlan"
+        android:name="com.example.splash.FavoriIlanFragment"
+        android:label="fragment_favori_ilan"
+        tools:layout="@layout/fragment_favori_ilan" />
+    <fragment
+        android:id="@+id/bakiyeCekFragment"
+        android:name="com.example.splash.BakiyeCekFragment"
+        android:label="fragment_bakiye_cek"
+        tools:layout="@layout/fragment_bakiye_cek" />
 </navigation>
