@@ -14,6 +14,8 @@ import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.databinding.FragmentAddBinding
 import com.example.splash.databinding.FragmentProfileBinding
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 
 
 class ProfileFragment : Fragment() {
@@ -26,6 +28,10 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
         val view2 = binding.root
+
+
+
+
 
 
         // Inflate the layout for this fragment
@@ -48,8 +54,17 @@ class ProfileFragment : Fragment() {
 
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.title = "E-Kira"
+        val activity = requireActivity() as AppCompatActivity
+        activity.setSupportActionBar(binding.toolbar)
 
         (requireActivity() as MenuHost).addMenuProvider(object: MenuProvider{
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
