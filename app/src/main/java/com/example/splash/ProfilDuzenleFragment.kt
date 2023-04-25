@@ -38,7 +38,7 @@ class ProfilDuzenleFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
 
-
+println()
 
 
 
