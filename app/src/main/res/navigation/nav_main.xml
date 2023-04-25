@@ -34,6 +34,10 @@
         <action
             android:id="@+id/action_addFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="periyot"
+            app:argType="string"
+            android:defaultValue="Null" />
     </fragment>
     <fragment
         android:id="@+id/ilanDetayFragment"

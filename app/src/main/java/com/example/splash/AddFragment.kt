@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.example.splash.api.RestApiService
 import com.example.splash.databinding.FragmentAddBinding
 import com.google.android.material.snackbar.Snackbar
@@ -78,6 +79,9 @@ class AddFragment : Fragment() {
         val apiService = this@AddFragment.context?.let { RestApiService(it) }
 
         UpdateCitySpinner(true)
+
+        val bundle: AddFragmentArgs by navArgs()
+        val gelenPeriyot = bundle.periyot
 
         periyot.add("Günlük")
         periyot.add("Haftalık")

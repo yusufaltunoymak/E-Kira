@@ -67,7 +67,7 @@ class ilanDetayFragment : Fragment() {
         val gelenAciklama = bundle.aciklama
         binding.gelenaciklamatextView.text = gelenAciklama
         val gelenphoto = bundle.downloadurl
-        Picasso.get().load(gelenphoto).into(binding.ilanDetayimage)
+        Picasso.get().load(gelenphoto).resize(2100,1000).into(binding.ilanDetayimage)
         println(gelenBaslik)
         println(gelenBaslik)
 

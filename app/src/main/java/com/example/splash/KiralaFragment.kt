@@ -88,7 +88,7 @@ class KiralaFragment : Fragment() {
         binding.aciklamaKirala.text = gelenAciklama
 
         val gelenphoto = bundle.downloadurl
-        Picasso.get().load(gelenphoto).into(binding.ilanDetayimage)
+        Picasso.get().load(gelenphoto).resize(1800,1000).into(binding.ilanDetayimage)
 
 
     }
