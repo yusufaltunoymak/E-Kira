@@ -3,16 +3,21 @@ package com.example.splash
 import android.content.Intent
 import android.provider.Settings.Secure.putString
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 
 import com.example.splash.databinding.IlanCardViewBinding
 import com.squareup.picasso.Picasso
 
 class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerView.Adapter<RecyclerViewAdapter.AdventHolder>() {
+private lateinit var db : AdventDatabase
+private lateinit var adventDao: AdventDao
     class AdventHolder(val binding: IlanCardViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdventHolder {
@@ -22,6 +27,7 @@ class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerV
 
     override fun getItemCount(): Int {
         return adventList.size
+
     }
 
     override fun onBindViewHolder(holder: AdventHolder, position: Int) {
@@ -30,7 +36,10 @@ class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerV
         holder.binding.ilanKonum.text = adventList.get(position).cities
         holder.binding.ilanPeriyot.text = adventList.get(position).Periyot
         Picasso.get().load(adventList.get(position).downloadUrl).into(holder.binding.ilanGorseli)
-
+        db = Room.databaseBuilder(holder.binding.root.context.applicationContext,AdventDatabase::class.java,"Advents")
+            .allowMainThreadQueries()
+            .build()
+        adventDao = db.adventDao()
 
         holder.binding.satirCardView.setOnClickListener {
             val gecis = MainFragmentDirections.actionMainFragmentToIlanDetayFragment(position, adventList.get(position).Baslik,
@@ -41,12 +50,31 @@ class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerV
 
             Navigation.findNavController(it).navigate(gecis)
 
+        }
+        holder.binding.favoriteButton.setOnClickListener {
+            val advent = Advent(
+                adventList.get(position).Aciklama,
+                adventList.get(position).Baslik,
+                adventList.get(position).Kirafiyati,
+                adventList.get(position).Periyot,
+                adventList.get(position).cities,
+                adventList.get(position).districts,
+                adventList.get(position).downloadUrl,
+                adventList.get(position).quarters,
+                adventList.get(position).towns
+            )
+            adventDao.insert(advent)
+            Toast.makeText(holder.itemView.context, "Added to favorites!", Toast.LENGTH_SHORT).show()
 
 
 
         }
 
+
     }
+
+
+
 
 }
 

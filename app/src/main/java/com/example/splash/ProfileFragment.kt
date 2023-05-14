@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
                         true
                     }
                     R.id.favori_ilan -> {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToFavoriIlan()
+                        val action = ProfileFragmentDirections.actionProfileFragmentToFavoriteFragment()
                         Navigation.findNavController(binding.root).navigate(action)
                         true
                     }
