@@ -28,12 +28,12 @@
         <action
 
             android:id="@+id/action_profileFragment_to_favoriIlan"
-            app:destination="@id/favoriIlan" />
+            app:destination="@id/favoriteFragment" />
         <action
             android:id="@+id/action_profileFragment_to_bakiyeFragment"
             app:destination="@id/bakiyeFragment" />
 
-            android:id="@+id/action_profileFragment_to_bakiyeCekFragment"
+            android:id="@+id/action_profileFragment_to_bakiyeFragment"
             app:destination="@id/bakiyeCekFragment" />
         <action
             android:id="@+id/action_profileFragment_to_favoriteFragment"

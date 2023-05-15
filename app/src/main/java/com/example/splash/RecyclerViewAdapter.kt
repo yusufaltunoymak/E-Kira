@@ -38,6 +38,7 @@ private lateinit var adventDao: AdventDao
         Picasso.get().load(adventList.get(position).downloadUrl).into(holder.binding.ilanGorseli)
         db = Room.databaseBuilder(holder.binding.root.context.applicationContext,AdventDatabase::class.java,"Advents")
             .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
             .build()
         adventDao = db.adventDao()
 
