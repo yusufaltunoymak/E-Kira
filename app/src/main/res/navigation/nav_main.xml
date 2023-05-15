@@ -29,8 +29,8 @@
             android:id="@+id/action_profileFragment_to_favoriIlan"
             app:destination="@id/favoriIlan" />
         <action
-            android:id="@+id/action_profileFragment_to_bakiyeCekFragment"
-            app:destination="@id/bakiyeCekFragment" />
+            android:id="@+id/action_profileFragment_to_bakiyeFragment"
+            app:destination="@id/bakiyeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -108,8 +108,8 @@
         android:label="fragment_profil_duzenle"
         tools:layout="@layout/fragment_profil_duzenle" >
         <action
-            android:id="@+id/action_profilDuzenleFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_profilDuzenleFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriIlan"
@@ -117,8 +117,12 @@
         android:label="fragment_favori_ilan"
         tools:layout="@layout/fragment_favori_ilan" />
     <fragment
-        android:id="@+id/bakiyeCekFragment"
-        android:name="com.example.splash.BakiyeCekFragment"
-        android:label="fragment_bakiye_cek"
-        tools:layout="@layout/fragment_bakiye_cek" />
+        android:id="@+id/bakiyeFragment"
+        android:name="com.example.splash.BakiyeFragment"
+        android:label="fragment_bakiye"
+        tools:layout="@layout/fragment_bakiye">
+        <action
+            android:id="@+id/action_bakiyeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

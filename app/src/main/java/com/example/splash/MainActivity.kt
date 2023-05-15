@@ -25,13 +25,7 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this,R.id.navHost)
         setupWithNavController(binding.bottomNavigationView,navController)
 
-
-
-
-
     }
-
-
 
     fun logout(view : View) {
         var sm = SessionManager(this@MainActivity)
@@ -46,6 +40,10 @@ class MainActivity : AppCompatActivity() {
                 sm.saveAuthToken("")
             }
         }
+        // Start RegisterActivity here
+        val intent = Intent(this@MainActivity, RegisterActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 
