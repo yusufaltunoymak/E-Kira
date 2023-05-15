@@ -9,7 +9,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/satirCardView"
+        android:id="@+id/ilanCardView"
         android:layout_width="wrap_content"
         android:layout_height="156dp"
         android:layout_margin="10dp"

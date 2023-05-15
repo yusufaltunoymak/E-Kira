@@ -41,7 +41,7 @@ private lateinit var adventDao: AdventDao
             .build()
         adventDao = db.adventDao()
 
-        holder.binding.satirCardView.setOnClickListener {
+        holder.binding.ilanCardView.setOnClickListener {
             val gecis = MainFragmentDirections.actionMainFragmentToIlanDetayFragment(position, adventList.get(position).Baslik,
                 adventList.get(position).Kirafiyati.toInt(),adventList.get(position).Periyot,
                 adventList.get(position).cities,adventList.get(position).districts,
