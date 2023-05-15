@@ -1,21 +1,14 @@
 package com.example.splash
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
-import com.example.splash.api.RestApiService
-import com.example.splash.api.SessionManager
-import com.example.splash.databinding.FragmentAddBinding
 import com.example.splash.databinding.FragmentProfileBinding
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 
 
 class ProfileFragment : Fragment() {
@@ -28,10 +21,6 @@ class ProfileFragment : Fragment() {
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater,container,false)
         val view2 = binding.root
-
-
-
-
 
 
         // Inflate the layout for this fragment
@@ -58,13 +47,13 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val mainActivity = requireActivity() as MainActivity
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.title = "E-Kira"
+        binding.profiletoolbar.title = "E-Kira"
         val activity = requireActivity() as AppCompatActivity
-        activity.setSupportActionBar(binding.toolbar)
+        activity.setSupportActionBar(binding.profiletoolbar)
 
         (requireActivity() as MenuHost).addMenuProvider(object: MenuProvider{
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -83,9 +72,13 @@ class ProfileFragment : Fragment() {
                         Navigation.findNavController(binding.root).navigate(action)
                         true
                     }
-                    R.id.bakiye_cek -> {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToBakiyeCekFragment()
+                    R.id.bakiye -> {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToBakiyeFragment()
                         Navigation.findNavController(binding.root).navigate(action)
+                        true
+                    }
+                    R.id.logout -> {
+                        mainActivity.logout(view)
                         true
                     }
                 }

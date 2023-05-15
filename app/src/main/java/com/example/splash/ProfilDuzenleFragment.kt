@@ -27,22 +27,17 @@ class ProfilDuzenleFragment : Fragment() {
         binding = FragmentProfilDuzenleBinding.inflate(layoutInflater,container,false)
         val view = binding.root
         return view
-       // return inflater.inflate(R.layout.fragment_profil_duzenle, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.backbtn.setOnClickListener {
-            val action = ProfilDuzenleFragmentDirections.actionProfilDuzenleFragmentToMainFragment("s")
+            val action = ProfilDuzenleFragmentDirections.actionProfilDuzenleFragmentToProfileFragment()
             Navigation.findNavController(it).navigate(action)
         }
 
-println()
-
-
-
     }
-
 
 }

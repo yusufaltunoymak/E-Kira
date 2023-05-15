@@ -26,11 +26,19 @@
             android:id="@+id/action_profileFragment_to_profilDuzenleFragment"
             app:destination="@id/profilDuzenleFragment" />
         <action
+
+            android:id="@+id/action_profileFragment_to_favoriIlan"
+            app:destination="@id/favoriIlan" />
+        <action
+            android:id="@+id/action_profileFragment_to_bakiyeFragment"
+            app:destination="@id/bakiyeFragment" />
+
             android:id="@+id/action_profileFragment_to_bakiyeCekFragment"
             app:destination="@id/bakiyeCekFragment" />
         <action
             android:id="@+id/action_profileFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -108,10 +116,68 @@
         android:label="fragment_profil_duzenle"
         tools:layout="@layout/fragment_profil_duzenle" >
         <action
-            android:id="@+id/action_profilDuzenleFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_profilDuzenleFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
     <fragment
+        android:id="@+id/bakiyeFragment"
+        android:name="com.example.splash.BakiyeFragment"
+        android:label="fragment_bakiye"
+        tools:layout="@layout/fragment_bakiye">
+        <action
+            android:id="@+id/action_bakiyeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
         android:id="@+id/bakiyeCekFragment"
         android:name="com.example.splash.BakiyeCekFragment"
         android:label="fragment_bakiye_cek"
@@ -121,4 +187,5 @@
         android:name="com.example.splash.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+  
 </navigation>
