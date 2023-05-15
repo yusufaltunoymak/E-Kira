@@ -16,6 +16,7 @@ class FavoriteFragment : Fragment() {
     private lateinit var adventAdapter : FavoriteRecyclerAdapter
     private lateinit var db: AdventDatabase
     private lateinit var adventDao: AdventDao
+
     private lateinit var binding: FragmentFavoriteBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -32,15 +33,20 @@ class FavoriteFragment : Fragment() {
             .build()
         adventDao = db.adventDao()
 
-        val recyclerViewAdapter = FavoriteRecyclerAdapter(adventDao.getAll() as ArrayList<Advent>)
-        binding.FavoriteRc.adapter = recyclerViewAdapter
+        adventAdapter = FavoriteRecyclerAdapter(adventDao.getAll() as ArrayList<Advent>)
+        binding.FavoriteRc.adapter = adventAdapter
 
         binding.FavoriteRc.layoutManager = LinearLayoutManager(requireContext())
-        recyclerViewAdapter.notifyDataSetChanged()
+        adventAdapter.notifyDataSetChanged()
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         var _binding = null
     }
+
+
+
+
 }

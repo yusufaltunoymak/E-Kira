@@ -62,9 +62,11 @@ private lateinit var adventDao: AdventDao
                 adventList.get(position).downloadUrl,
                 adventList.get(position).quarters,
                 adventList.get(position).towns
+
             )
             adventDao.insert(advent)
-            Toast.makeText(holder.itemView.context, "Added to favorites!", Toast.LENGTH_SHORT).show()
+
+            Toast.makeText(holder.itemView.context, "Favorilere Eklendi", Toast.LENGTH_SHORT).show()
 
 
 

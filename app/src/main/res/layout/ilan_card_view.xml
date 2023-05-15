@@ -29,7 +29,7 @@
                 android:layout_marginTop="11dp"
                 android:layout_marginEnd="21dp"
                 android:maxLines="2"
-                android:text="Sahibinden Satılık flsdaflsa flösdafal"
+                android:text="Sahibinden Satılık "
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

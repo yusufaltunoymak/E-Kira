@@ -41,9 +41,10 @@ class FavoriteRecyclerAdapter(private val adventList:ArrayList<Advent>) : Recycl
         adventDao = db.adventDao()
 
         holder.binding.DeleteFavorite.setOnClickListener{
-            val advent = adventList[position]
-            adventDao.delete(advent)
-            Toast.makeText(holder.itemView.context,"Favorilerden Silindi",Toast.LENGTH_LONG).show()
+            adventList.removeAt(position)
+            adventDao.delete(adventList[position])
+            notifyDataSetChanged()
+            Toast.makeText(holder.itemView.context,"Favorilerden Silindi",Toast.LENGTH_SHORT).show()
         }
 
     }
