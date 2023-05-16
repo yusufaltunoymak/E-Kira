@@ -36,4 +36,16 @@ interface RestApi {
     @Headers("Content-Type: application/json")
     @GET("v1/get-quarters/{districtId}")
     fun getQuarters(@Path(value = "districtId") districtId : Int): Call<ApiResponse<List<Quarter>>>
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/user/set-phone")
+    fun setPhone(@Body data: SetPhonePost): Call<ApiResponse<SetPhoneResult>>
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/user/verify-phone")
+    fun verifyPhone(@Body data: VerifyPhonePost): Call<ApiResponse<VerifyPhoneResult>>
+
+    @Headers("Content-Type: application/json")
+    @POST("v1/user/set-profile")
+    fun setProfile(@Body data: SetProfile): Call<ApiResponse<SetProfile>>
 }

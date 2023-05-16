@@ -2,6 +2,7 @@ package com.example.splash
 
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.core.view.MenuHost
@@ -24,19 +25,19 @@ class ProfileFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-
-
-        val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
-        val nameTextView = view.findViewById(R.id.full_name) as TextView
-        val emailTextView = view.findViewById(R.id.user_email) as TextView
+        val nameTextView = view2.findViewById(R.id.full_name) as TextView
+        val emailTextView = view2.findViewById(R.id.user_email) as TextView
+        var phoneTextView = view2.findViewById(R.id.user_phone) as TextView
         var firstName = this@ProfileFragment.activity?.intent?.extras?.getString("firstName")
         val lastName = this@ProfileFragment.activity?.intent?.extras?.getString("lastName")
         val email = this@ProfileFragment.activity?.intent?.extras?.getString("email")
+        val phoneNumber = this@ProfileFragment.activity?.intent?.extras?.getString("phoneNumber")
         if(lastName?.length!! > 0) {
             firstName = "$firstName $lastName"
         }
         nameTextView.text = firstName
         emailTextView.text = email
+        phoneTextView.text = phoneNumber
 
         return view2
 

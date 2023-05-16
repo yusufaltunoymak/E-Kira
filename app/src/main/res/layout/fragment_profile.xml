@@ -45,7 +45,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="DENEME DENEME"
                 android:textColor="#292828"
                 android:textSize="20sp"
                 android:textStyle="bold">
@@ -57,21 +56,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:hint="DENEME DENEME @gmail.com"
                 android:textColor="#292828"
                 android:textSize="14sp">
 
             </TextView>
 
-            <EditText
-                android:id="@+id/editTextPhone2"
+            <TextView
+                android:id="@+id/user_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="#00BB86FC"
-                android:hint="0-555-555-55-55"
-                android:inputType="phone"
-                android:minHeight="48dp" />
+                android:layout_marginTop="15dp"
+                android:textColor="#292828"
+                android:textSize="14sp">
+
+            </TextView>
 
         </LinearLayout>
 

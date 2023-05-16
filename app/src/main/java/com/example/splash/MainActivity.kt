@@ -10,7 +10,6 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.databinding.ActivityMainBinding
-import com.google.android.material.appbar.MaterialToolbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding

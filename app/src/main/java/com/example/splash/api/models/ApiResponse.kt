@@ -8,4 +8,4 @@ data class ApiResponse<T>(
     @SerializedName("headers") val headers: JSONObject?,
     @SerializedName("error") val error: String = "",
     @SerializedName("isSuccess") val isSuccess: Boolean = false,
-    @SerializedName("statusCode") val statusCode: Int = 0)
+)

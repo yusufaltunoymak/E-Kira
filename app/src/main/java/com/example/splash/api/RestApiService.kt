@@ -1,6 +1,7 @@
 package com.example.splash.api
 
 import android.content.Context
+import com.example.splash.ProfilDuzenleFragment
 import com.example.splash.api.models.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -203,6 +204,62 @@ class RestApiService {
                     val authResult = response.body()
                     println(authResult)
                     onResult(authResult)
+                }
+            }
+        )
+    }
+
+    fun setPhone(data: SetPhonePost, onResult: (ApiResponse<SetPhoneResult>?) -> Unit){
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.setPhone(data).enqueue(
+            object : Callback<ApiResponse<SetPhoneResult>> {
+                override fun onFailure(call: Call<ApiResponse<SetPhoneResult>>, t: Throwable) {
+                    println(t.message)
+                    println(t)
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<ApiResponse<SetPhoneResult>>, response: Response<ApiResponse<SetPhoneResult>>) {
+                    println(response.body().toString())
+                    val loginResult = response.body()
+                    println(loginResult)
+                    onResult(loginResult)
+                }
+            }
+        )
+    }
+
+    fun verifyPhone(data: VerifyPhonePost, onResult: (ApiResponse<VerifyPhoneResult>?) -> Unit){
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.verifyPhone(data).enqueue(
+            object : Callback<ApiResponse<VerifyPhoneResult>> {
+                override fun onFailure(call: Call<ApiResponse<VerifyPhoneResult>>, t: Throwable) {
+                    println(t.message.toString())
+                    println(t)
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<ApiResponse<VerifyPhoneResult>>, response: Response<ApiResponse<VerifyPhoneResult>>) {
+                    println(response.body().toString())
+                    val loginResult = response.body()
+                    println(loginResult)
+                    onResult(loginResult)
+                }
+            }
+        )
+    }
+
+    fun setProfile(data: SetProfile, onResult: (ApiResponse<SetProfile>?) -> Unit){
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.setProfile(data).enqueue(
+            object : Callback<ApiResponse<SetProfile>> {
+                override fun onFailure(call: Call<ApiResponse<SetProfile>>, t: Throwable) {
+                    println(t.message.toString())
+                    onResult(null)
+                }
+                override fun onResponse( call: Call<ApiResponse<SetProfile>>, response: Response<ApiResponse<SetProfile>>) {
+                    println(response.body().toString())
+                    val loginResult = response.body()
+                    println(loginResult)
+                    onResult(loginResult)
                 }
             }
         )
