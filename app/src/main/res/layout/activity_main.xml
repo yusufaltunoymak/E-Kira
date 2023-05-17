@@ -28,5 +28,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/nav_menu"/>
 
-
+    <LinearLayout
+        android:id="@+id/profilDuzenleFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

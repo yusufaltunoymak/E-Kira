@@ -8,7 +8,6 @@ class RestApiInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        println("deneme main interceptor")
         val request: Request = chain.request()
             .newBuilder()
             .addHeader("appid", "e-kira")

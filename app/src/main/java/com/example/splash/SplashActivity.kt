@@ -53,6 +53,7 @@ class SplashActivity : AppCompatActivity() {
         intent.putExtra("firstName", it?.result?.firstName)
         intent.putExtra("lastName", it?.result?.lastName)
         intent.putExtra("email", it?.result?.email)
+        intent.putExtra("phoneNumber", it?.result?.phoneNumber)
         startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()

@@ -17,9 +17,7 @@ class NetworkInterceptor : Interceptor {
         this.mContext = context
     }
     override fun intercept(chain: Interceptor.Chain): Response {
-        println("NetworkInterceptor")
         if(!isNetworkAvailable()) {
-            println("123")
             throw NoConnectivityException()
         }
         val builder: Request.Builder = chain.request().newBuilder()

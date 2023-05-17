@@ -19,7 +19,6 @@ class ServiceBuilder {
         var authInterceptor = AuthInterceptor(context)
         this.client = client.addInterceptor(networkInterceptor).addInterceptor(mainInterceptor).addInterceptor(authInterceptor)
         this.retrofitBuilder = retrofitBuilder.client(this.client.build())
-        println("ServiceBuilder")
     }
 
     fun<T> buildService(service: Class<T>): T{

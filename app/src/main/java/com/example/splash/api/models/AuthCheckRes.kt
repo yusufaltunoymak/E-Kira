@@ -7,5 +7,6 @@ data class AuthCheckRes (
     @SerializedName("lastName") val lastName: String = "",
     @SerializedName("validated") val validated: Boolean = false,
     @SerializedName("id") val userId: String = "",
-    @SerializedName("email") val email: String = ""
+    @SerializedName("email") val email: String = "",
+    @SerializedName("phoneNumber") val phoneNumber: String = ""
 )
