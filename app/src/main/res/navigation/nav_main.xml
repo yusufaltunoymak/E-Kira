@@ -113,6 +113,9 @@
         <argument
             android:name="cities"
             app:argType="string" />
+        <argument
+            android:name="periyot"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profilDuzenleFragment"

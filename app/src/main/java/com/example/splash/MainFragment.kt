@@ -2,15 +2,10 @@ package com.example.splash
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.splash.api.models.IlanModel
 import com.example.splash.databinding.FragmentMainBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -74,6 +69,7 @@ class MainFragment : Fragment() {
                                     quarters, towns
                                 )
 
+
                                 adventArrayList.add(advent)
 
 
@@ -90,7 +86,6 @@ class MainFragment : Fragment() {
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager
 
-        // val card = view.findViewById<TextView>(R.id.submit)
 
 
     }

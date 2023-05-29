@@ -72,7 +72,7 @@ class ilanDetayFragment : Fragment() {
         println(gelenBaslik)
 
         binding.kirala.setOnClickListener {
-            val action = ilanDetayFragmentDirections.actionIlanDetayFragmentToKiralaFragment(gelenphoto,gelenBaslik,gelenkira,gelenAciklama,gelenCities)
+            val action = ilanDetayFragmentDirections.actionIlanDetayFragmentToKiralaFragment(gelenphoto,gelenBaslik,gelenkira,gelenAciklama,gelenCities,gelenPeriyot)
             Navigation.findNavController(it).navigate(action)
         }
 

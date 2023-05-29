@@ -30,11 +30,10 @@ class FavoriteRecyclerAdapter(private val adventList:ArrayList<Advent>) : Recycl
 
     override fun onBindViewHolder(holder: AdventHolder, position: Int) {
         if(adventList.isEmpty()) {
-            holder.binding.noFavoriteText.text = "Favori ilanınız bulunmamaktadır"
-            holder.binding.noFavoriteText.visibility = View.VISIBLE
+            holder.binding.notFound.visibility = View.VISIBLE
             holder.binding.ilanCardView.visibility = View.GONE
         } else {
-            holder.binding.noFavoriteText.visibility = View.GONE
+            holder.binding.notFound.visibility = View.GONE
             holder.binding.ilanCardView.visibility = View.VISIBLE
             holder.binding.ilanBaslik.text = adventList[position].Baslik
             holder.binding.ilanFiyat.text = adventList[position].Kirafiyati

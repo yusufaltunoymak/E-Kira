@@ -124,22 +124,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/noFavoriteText"
-            android:layout_width="372dp"
-            android:layout_height="272dp"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginBottom="1dp"
-            android:text="Favori ilanınız bulunmamaktadır."
-            android:textSize="34sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <ImageView
+            android:id="@+id/notFound"
+            android:layout_width="409dp"
+            android:layout_height="467dp"
+            android:layout_marginTop="90dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:srcCompat="@drawable/not_found" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

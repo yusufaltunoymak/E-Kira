@@ -41,12 +41,14 @@ class FavoriteFragment : Fragment() {
 
     }
 
+    interface AdventRemovedListener {
+        fun onAdventRemoved(advent: Advent)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         var _binding = null
     }
-
-
 
 
 }

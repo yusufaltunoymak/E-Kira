@@ -126,7 +126,7 @@
             app:layout_constraintTop_toBottomOf="@+id/aciklama_kirala">
 
             <TextView
-                android:id="@+id/pickupDateText"
+                android:id="@+id/pickupStartText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -134,7 +134,7 @@
                 android:textColor="#00E676" />
 
             <TextView
-                android:id="@+id/pickupTimeText"
+                android:id="@+id/pickupEndText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -248,32 +248,34 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/returnDate"
+                    android:id="@+id/baslangicTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="5dp"
-                    android:paddingRight="10dp"
-                    android:text="Web, Dec 17" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                    android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/returnTime"
+                    android:id="@+id/bitisTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="5dp"
-                    android:text="03:00PM" />
+                    android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/gelenPeriyotTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="11dp"
+        android:text="gelen periyot"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
