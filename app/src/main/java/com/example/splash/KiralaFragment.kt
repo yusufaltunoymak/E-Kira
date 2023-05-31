@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.splash.databinding.FragmentIlanDetayBinding
 import com.example.splash.databinding.FragmentKiralaBinding
@@ -142,7 +143,10 @@ class KiralaFragment : Fragment() {
         val gelenphoto = bundle.downloadurl
         Picasso.get().load(gelenphoto).resize(1800,1000).into(binding.ilanDetayimage)
 
-
+        binding.backbtn.setOnClickListener {
+            val action = KiralaFragmentDirections.actionKiralaFragmentToIlanDetayFragment2(id,gelenBaslik,gelenkira,gelenPeriyot,gelenCities,"","","",gelenAciklama,gelenphoto)
+            Navigation.findNavController(it).navigate(action)
+        }
 
 
     }

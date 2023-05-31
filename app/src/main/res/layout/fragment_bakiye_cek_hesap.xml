@@ -28,7 +28,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="20dp"
-                    android:text="Iban Giriniz:"
+                    android:text="Hesap Numarası Giriniz:"
                     android:textColor="#333333"
                     android:textSize="19sp"
                     android:textStyle="bold" />
@@ -42,7 +42,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/rounded_edittext_background"
-                    android:hint="Iban Giriniz."
+                    android:hint="Hesap Numarası Giriniz:"
                     android:inputType="number"
                     android:minHeight="48dp" />
 

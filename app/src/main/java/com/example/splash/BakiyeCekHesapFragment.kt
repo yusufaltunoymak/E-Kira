@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.example.splash.R
 
-class BakiyeCekFragment : Fragment() {
+class BakiyeCekHesapFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_bakiye_cek, container, false)
+        val view = inflater.inflate(R.layout.fragment_bakiye_cek_hesap, container, false)
 
         return view
     }

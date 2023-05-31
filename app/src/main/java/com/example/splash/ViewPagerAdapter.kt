@@ -1,5 +1,7 @@
 package com.example.splash
 
+import BakiyeCekFragment
+import BakiyeCekHesapFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -13,7 +15,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> BakiyeCekFragment()
-            1 -> BakiyeYukleFragment()
+            1 -> BakiyeCekHesapFragment()
             else -> return BakiyeCekFragment()
         }
     }

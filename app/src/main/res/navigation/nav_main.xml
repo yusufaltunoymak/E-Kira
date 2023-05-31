@@ -116,6 +116,9 @@
         <argument
             android:name="periyot"
             app:argType="string" />
+        <action
+            android:id="@+id/action_kiralaFragment_to_ilanDetayFragment2"
+            app:destination="@id/ilanDetayFragment" />
     </fragment>
     <fragment
         android:id="@+id/profilDuzenleFragment"
@@ -193,6 +196,10 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.splash.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
   
 </navigation>

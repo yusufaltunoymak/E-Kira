@@ -21,11 +21,14 @@
             android:id="@+id/backbtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
             android:padding="14dp"
             app:srcCompat="@drawable/back" />
 
         <TextView
-            android:id="@+id/il_kirala"
+            android:id="@+id/Toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -64,7 +67,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="35dp"
-                    android:layout_marginRight="5dp"
                     android:drawableLeft="@drawable/wallet"
                     android:drawablePadding="15dp"
                     android:gravity="center"
@@ -72,17 +74,6 @@
                     android:textColor="#000000"
                     android:textSize="20sp"
                     android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextNumber2"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:inputType="number"
-                    android:textSize="20sp"
-                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageView
                     android:id="@+id/imageView6"
@@ -93,6 +84,17 @@
                     android:layout_marginTop="20dp"
                     android:src="@drawable/lirabakiye" />
 
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="15dp"
+                    android:hint="0"
+                    android:textAlignment="center"
+                    android:textSize="34sp" />
+
             </androidx.cardview.widget.CardView>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -102,8 +104,8 @@
                     android:id="@+id/tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
                     android:background="#00FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -131,6 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="bottom"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="#49BFEC" />
 
         </FrameLayout>

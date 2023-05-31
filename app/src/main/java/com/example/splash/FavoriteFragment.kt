@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -38,6 +39,11 @@ class FavoriteFragment : Fragment() {
 
         binding.FavoriteRc.layoutManager = LinearLayoutManager(requireContext())
         adventAdapter.notifyDataSetChanged()
+
+        binding.favoribtn.setOnClickListener {
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToProfileFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
     }
 
