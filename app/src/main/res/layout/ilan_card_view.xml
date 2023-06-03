@@ -13,11 +13,14 @@
         android:id="@+id/ilanCardView"
         android:layout_width="wrap_content"
         android:layout_height="156dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:background="@drawable/cardlayer"
+        app:cardBackgroundColor="#49BFEC"
+        app:contentPadding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="356dp"
-            android:layout_height="133dp">
+            android:layout_width="wrap_content"
+            android:layout_height="132dp">
 
             <TextView
                 android:id="@+id/ilanBaslik"

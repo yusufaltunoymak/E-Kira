@@ -145,7 +145,10 @@ class KiralaFragment : Fragment() {
 
         binding.backbtn.setOnClickListener {
             requireActivity().onBackPressed()
+            }
         }
+
+
 
 
     }
@@ -159,4 +162,6 @@ class KiralaFragment : Fragment() {
         val displayName = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, locale)
         return "$displayName"
     }
-}
+
+
+

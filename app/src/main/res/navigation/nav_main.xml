@@ -117,7 +117,7 @@
             android:name="periyot"
             app:argType="string" />
         <action
-            android:id="@+id/action_kiralaFragment_to_ilanDetayFragment2"
+            android:id="@+id/action_kiralaFragment_to_ilanDetayFragment"
             app:destination="@id/ilanDetayFragment" />
     </fragment>
     <fragment
