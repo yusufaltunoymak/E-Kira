@@ -26,15 +26,13 @@
                 android:id="@+id/ilanBaslik"
                 android:layout_width="179dp"
                 android:layout_height="76dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="120dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="7dp"
                 android:maxLines="2"
                 android:text="Sahibinden Satılık "
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/favoriteButton"
-                app:layout_constraintStart_toEndOf="@+id/ilanGorseli"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -44,9 +42,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="4dp"
                 android:text="Şişli,İstanbul"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView" />
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/ilanGorseli" />
 
             <ImageView
                 android:id="@+id/ilanGorseli"
@@ -65,43 +65,49 @@
                 android:layout_marginBottom="4dp"
                 android:text="1200"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik" />
 
             <TextView
                 android:id="@+id/ilanPeriyot"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="26dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginStart="160dp"
                 android:layout_marginBottom="3dp"
+                android:drawableStart="@drawable/clock"
+                android:drawablePadding="7dp"
+                android:gravity="center_vertical"
                 android:text="Haftalık"
                 android:textAlignment="gravity"
-                android:textSize="18sp"
-                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/ilanKonum" />
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="45dp"
-                android:layout_height="31dp"
+                android:layout_width="40dp"
+                android:layout_height="23dp"
                 android:layout_marginBottom="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ilanFiyat"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik"
                 app:srcCompat="@drawable/lira" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="35dp"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="23sp"
                 android:layout_marginEnd="9dp"
                 android:layout_marginBottom="3dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ilanKonum"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ilanGorseli"
                 app:srcCompat="@drawable/konum" />
 
             <ImageView

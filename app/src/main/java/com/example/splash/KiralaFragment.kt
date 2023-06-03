@@ -144,8 +144,7 @@ class KiralaFragment : Fragment() {
         Picasso.get().load(gelenphoto).resize(1800,1000).into(binding.ilanDetayimage)
 
         binding.backbtn.setOnClickListener {
-            val action = KiralaFragmentDirections.actionKiralaFragmentToIlanDetayFragment2(id,gelenBaslik,gelenkira,gelenPeriyot,gelenCities,"","","",gelenAciklama,gelenphoto)
-            Navigation.findNavController(it).navigate(action)
+            requireActivity().onBackPressed()
         }
 
 

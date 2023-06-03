@@ -77,8 +77,7 @@ class ilanDetayFragment : Fragment() {
         }
 
         binding.backbtn.setOnClickListener {
-            val action = ilanDetayFragmentDirections.ilantomain("sa")
-            Navigation.findNavController(it).navigate(action)
+            requireActivity().onBackPressed()
         }
 
     }

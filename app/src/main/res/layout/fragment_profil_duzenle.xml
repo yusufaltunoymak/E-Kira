@@ -21,6 +21,7 @@
                 android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
+                android:background="@drawable/relativelayoutline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -150,16 +151,13 @@
 
                     <Button
                         android:id="@+id/GuncelleButton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="254dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="left"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
                         android:backgroundTint="#86000000"
                         android:text="Bilgileri Güncelle"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
                 </TableRow>
@@ -247,7 +245,7 @@
 
                 <TableRow
                     android:id="@+id/dogrulabuton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp">
@@ -255,9 +253,9 @@
                     <Button
                         android:id="@+id/DogrulaButton"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="225dp"
-                        android:background="@drawable/buttonround"
+                        android:backgroundTint="#86000000"
                         android:text="Doğrula"
                         android:visibility="invisible" />
                 </TableRow>
