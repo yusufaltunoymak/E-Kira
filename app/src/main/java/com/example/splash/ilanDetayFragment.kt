@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
@@ -39,6 +40,19 @@ class ilanDetayFragment : Fragment() {
         val view = binding.root
         firestore = Firebase.firestore
         storage = Firebase.storage
+
+        val nameTextView = view.findViewById(R.id.full_name) as TextView
+        val emailTextView = view.findViewById(R.id.user_email) as TextView
+
+        var firstName = this@ilanDetayFragment.activity?.intent?.extras?.getString("firstName")
+        val lastName = this@ilanDetayFragment.activity?.intent?.extras?.getString("lastName")
+        val email = this@ilanDetayFragment.activity?.intent?.extras?.getString("email")
+
+        if(lastName?.length!! > 0) {
+            firstName = "$firstName $lastName"
+        }
+        nameTextView.text = firstName
+        emailTextView.text = email
 
 
         return view
