@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class BakiyeFragment : Fragment() {
     private lateinit var binding: FragmentBakiyeBinding
 
-    private val tabTitle = arrayOf("IBAN İle Gönder" , "Havale/EFT")
+    private val tabTitle = arrayOf("Bakiye Çek" , "Taleplerim")
 
     override fun onCreateView(
         inflater: LayoutInflater,

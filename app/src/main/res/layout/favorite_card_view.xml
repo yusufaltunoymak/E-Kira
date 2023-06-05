@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/ilanCardView"
         android:layout_width="wrap_content"
-        android:layout_height="156dp"
+        android:layout_height="176dp"
         android:layout_margin="10dp"
         android:backgroundTint="#49BFEC"
         app:cardCornerRadius="10dp"
@@ -19,7 +19,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="356dp"
-            android:layout_height="133dp">
+            android:layout_height="163dp">
 
             <TextView
                 android:id="@+id/ilanBaslik"
@@ -41,18 +41,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="0dp"
                 android:text="Şişli,İstanbul"
-                android:textSize="18sp"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView" />
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/ilanGorseli" />
 
             <ImageView
                 android:id="@+id/ilanGorseli"
-                android:layout_width="101dp"
-                android:layout_height="83dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,47 +65,56 @@
                 android:id="@+id/ilanFiyat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="12dp"
                 android:layout_marginBottom="4dp"
                 android:text="1200"
                 android:textAlignment="textEnd"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik"
+                app:layout_constraintVertical_bias="0.784" />
 
             <TextView
                 android:id="@+id/ilanPeriyot"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="26dp"
-                android:layout_marginStart="22dp"
-                android:layout_marginEnd="28dp"
+                android:layout_marginStart="160dp"
                 android:layout_marginBottom="3dp"
+                android:drawableStart="@drawable/clock"
+                android:drawablePadding="7dp"
+                android:gravity="center_vertical"
                 android:text="Haftalık"
                 android:textAlignment="gravity"
-                android:textSize="18sp"
-                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                app:layout_constraintStart_toEndOf="@+id/ilanKonum" />
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik"
+                app:layout_constraintVertical_bias="0.791" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="45dp"
-                android:layout_height="31dp"
+                android:layout_width="40dp"
+                android:layout_height="23dp"
                 android:layout_marginBottom="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ilanFiyat"
+                app:layout_constraintTop_toBottomOf="@+id/ilanBaslik"
+                app:layout_constraintVertical_bias="0.773"
                 app:srcCompat="@drawable/lira" />
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="35dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginBottom="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="23sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/ilanKonum"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ilanGorseli"
                 app:srcCompat="@drawable/konum" />
 
             <ImageView
@@ -119,21 +133,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/notFound"
-            android:layout_width="409dp"
-            android:layout_height="467dp"
-            android:layout_marginTop="70dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/not_found" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

@@ -21,44 +21,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Hesap Numarası Giriniz:"
-                    android:textColor="#333333"
-                    android:textSize="19sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextHesapNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/rounded_edittext_background"
-                    android:hint="Hesap Numarası Giriniz:"
-                    android:inputType="number"
-                    android:minHeight="48dp" />
-
-                <Button
-                    android:id="@+id/BakiyeCekButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="#86000000"
-                    android:text="Bakiye Çek"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+               <!-- Bakiye çekme talepleri -->
 
             </LinearLayout>
         </ScrollView>

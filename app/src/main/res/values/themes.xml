@@ -14,7 +14,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!-- Customize your theme here. -->
-
+        <item name="colorAccent">@color/purple_500</item>
     </style>
 
 

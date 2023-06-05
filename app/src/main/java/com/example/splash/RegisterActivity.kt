@@ -1,5 +1,6 @@
 package com.example.splash
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,10 @@ import android.widget.Toast
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.api.models.LoginPost
+import com.example.splash.api.models.LoginRes
 import com.example.splash.api.models.RegisterPost
+import com.example.splash.api.models.RegisterRes
+import com.example.splash.api.models.User
 import com.example.splash.databinding.ActivityRegisterBinding
 
 
@@ -37,23 +41,19 @@ class RegisterActivity : AppCompatActivity() {
             password = password.toString() )
 
         apiService.loginPost(data) {
-            println(it)
             if (it?.isSuccess == true) {
-                println(it?.result)
-                if(it?.result != null) {
+                if(it.result != null) {
                     val sm = SessionManager(this@RegisterActivity)
-                    sm.saveAuthToken(it?.result.accessToken)
-                    var str: String = "Hoş Geldin, %s %s".format(
-                        it.result?.user?.firstName,
-                        it.result?.user?.lastName
+                    val loginResult = it?.result as LoginRes
+                    sm.saveAuthToken(loginResult.accessToken)
+                    val fullName = ""
+                    if(loginResult.user.firstName.isNotEmpty()) fullName.plus(loginResult.user.firstName)
+                    if(loginResult.user.lastName.isNotEmpty()) fullName.plus(" ").plus(loginResult.user.lastName)
+                    var str: String = "Hoş Geldiniz, %s".format(
+                        fullName,
                     )
                     Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    intent.putExtra("firstName", it?.result?.user?.firstName)
-                    intent.putExtra("lastName", it?.result?.user?.lastName)
-                    intent.putExtra("email", it?.result?.user?.email)
-                    startActivity(intent)
-                    finish()
+                    startActivityUserData(loginResult.user)
                 }
             } else {
                 Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
@@ -74,24 +74,29 @@ class RegisterActivity : AppCompatActivity() {
                 password = password.toString() )
 
             apiService.registerPost(data) {
-                println(it)
                 if (it?.isSuccess == true) {
-                    println(it?.result)
                     val sm = SessionManager(this@RegisterActivity)
-                    it?.result?.let { it1 -> sm.saveAuthToken(it1.accessToken) }
-                    var str: String = "Hoş Geldin, %s".format(it.result?.user?.email)
-                    Toast.makeText(this@RegisterActivity, str, Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@RegisterActivity,MainActivity::class.java)
-                    intent.putExtra("firstName", it?.result?.user?.firstName)
-                    intent.putExtra("lastName", it?.result?.user?.lastName)
-                    intent.putExtra("email", it?.result?.user?.email)
-                    startActivity(intent)
-                    finish()
+                    val registerResult = it.result as RegisterRes
+                    sm.saveAuthToken(registerResult.accessToken)
+                    Toast.makeText(this@RegisterActivity, "Hoş Geldiniz", Toast.LENGTH_LONG).show()
+                    startActivityUserData(registerResult.user)
                 } else {
                     Toast.makeText(this@RegisterActivity, it?.error.toString(), Toast.LENGTH_LONG).show()
                 }
             }
         }
+    }
+
+    fun startActivityUserData(user: User) {
+        val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+        intent.putExtra("firstName", user.firstName)
+        intent.putExtra("lastName", user.lastName)
+        intent.putExtra("email", user.email)
+        intent.putExtra("phone", user.phoneNumber)
+        intent.putExtra("registerDate", user.registerDate)
+        intent.putExtra("id", user.id)
+        startActivity(intent)
+        finish()
     }
 }
 

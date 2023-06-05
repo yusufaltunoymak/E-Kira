@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:text="E-Kira Bakiye Numarası:"
+                        android:text="Hesap ID:"
                         android:textColor="#000000"
                         android:textSize="22sp"
                         android:textStyle="bold" />
@@ -111,17 +111,6 @@
                         android:hint="0000-0000"
                         android:textColor="#000000"
                         android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:text="Bu Numara Kullanıcıya Özgü Bakiye Numarasıdır ve Bu bilgiyi lütfen kimseyle paylaşmayınız."
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/textView2"
