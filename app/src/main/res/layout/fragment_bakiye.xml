@@ -91,7 +91,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="6dp"
-                    android:hint="120"
+                    android:hint=".."
                     android:textAlignment="center"
                     android:textSize="34sp" />
 

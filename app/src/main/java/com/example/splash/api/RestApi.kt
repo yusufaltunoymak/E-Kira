@@ -1,8 +1,10 @@
 package com.example.splash.api
 
 import com.example.splash.api.models.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
+import java.math.BigDecimal
 
 interface RestApi {
     //====================================================================================================
@@ -47,10 +49,44 @@ interface RestApi {
         @Query("search") search: String,
         @Query("favorite") onlyFavorite: Boolean? = null): Call<ApiResponse<RentalHouseList>>
     //====================================================================================================
+    @GET("v1/rental-house/owned-list") @Headers("Content-Type: application/json")
+    fun getRentalHouseOwnedList(
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("sort") sort: String,
+        @Query("search") search: String): Call<ApiResponse<RentalHouseList>>
+    //====================================================================================================
+    @GET("v1/rental-house/{id}") @Headers("Content-Type: application/json")
+    fun getRentalHouseDetails(
+        @Path(value = "id") id : String): Call<ApiResponse<RentalHouseDetails>>
+    //====================================================================================================
     @GET("v1/rental-house/{id}/favorite") @Headers("Content-Type: application/json")
     fun favoriteRentalHouse(@Path(value = "id") id : String): Call<ApiResponse<String>>
     //====================================================================================================
     @GET("v1/rental-house/{id}/unfavorite") @Headers("Content-Type: application/json")
     fun unfavoriteRentalHouse(@Path(value = "id") id : String): Call<ApiResponse<String>>
+    //====================================================================================================
+    @Multipart
+    @POST("v1/rental-house/upload-image")
+    fun uploadRentalHouseImage(@Part image: MultipartBody.Part): Call<ApiResponse<UploadedImageID>>
+    //====================================================================================================
+    @Multipart
+    @POST("v1/user/set-profile-image")
+    fun setProfileImage(@Part image: MultipartBody.Part): Call<ApiResponse<UploadedImageID>>
+    //====================================================================================================
+    @POST("v1/rental-house/create") @Headers("Content-Type: application/json")
+    fun createRentalHouse(@Body data: RentalHouseCreatePost): Call<ApiResponse<RentalHouseDetails>>
+    //====================================================================================================
+    @POST("v1/rental-house/{id}/reserved-dates") @Headers("Content-Type: application/json")
+    fun reservedDatesRentalHouse(@Path(value = "id") id : String): Call<ApiResponse<List<String>>>
+    //====================================================================================================
+    @POST("v1/reservation/create") @Headers("Content-Type: application/json")
+    fun createReservation(@Body data: CreateReservationPost): Call<ApiResponse<CreateReservationResult>>
+    //====================================================================================================
+    @POST("v1/payment/make") @Headers("Content-Type: application/json")
+    fun makePayment(@Body data: PaymentMakePost): Call<ApiResponse<PaymentMakeResult>>
+    //====================================================================================================
+    @GET("v1/wallet/balance") @Headers("Content-Type: application/json")
+    fun getBalance(): Call<ApiResponse<BigDecimal>>
     //====================================================================================================
 }

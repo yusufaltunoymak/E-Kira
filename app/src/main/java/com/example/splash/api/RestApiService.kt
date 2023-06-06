@@ -3,9 +3,11 @@ package com.example.splash.api
 import android.content.Context
 import com.example.splash.api.models.*
 import com.google.gson.Gson
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.math.BigDecimal
 
 class RestApiService {
 
@@ -99,6 +101,20 @@ class RestApiService {
         )
     }
 
+    fun getRentalHouseOwnedList(page: Int, limit: Int, sort: String, search: String, onResult: (ApiResponse<RentalHouseList>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.getRentalHouseOwnedList(page, limit, sort, search).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun getRentalHouseDetails(rentalHouseID: String, onResult: (ApiResponse<RentalHouseDetails>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.getRentalHouseDetails(rentalHouseID).enqueue(
+            createCallback(onResult)
+        )
+    }
+
     fun favoriteRentalHouse(id: String, onResult: (ApiResponse<String>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.favoriteRentalHouse(id).enqueue(
@@ -113,6 +129,55 @@ class RestApiService {
         )
     }
 
+    fun uploadRentalHouseImage(image: MultipartBody.Part, onResult: (ApiResponse<UploadedImageID>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.uploadRentalHouseImage(image).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun setProfileImage(image: MultipartBody.Part, onResult: (ApiResponse<UploadedImageID>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.setProfileImage(image).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun createRentalHouse(data: RentalHouseCreatePost, onResult: (ApiResponse<RentalHouseDetails>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.createRentalHouse(data).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun reservedDatesRentalHouse(id: String, onResult: (ApiResponse<List<String>>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.reservedDatesRentalHouse(id).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun createReservation(data: CreateReservationPost, onResult: (ApiResponse<CreateReservationResult>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.createReservation(data).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun makePayment(data: PaymentMakePost, onResult: (ApiResponse<PaymentMakeResult>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.makePayment(data).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun getBalance(onResult: (ApiResponse<BigDecimal>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.getBalance().enqueue(
+            createCallback(onResult)
+        )
+    }
+
     private fun <T> createCallback(onResult: (ApiResponse<T>?) -> Unit) : Callback<ApiResponse<T>> {
         return object : Callback<ApiResponse<T>> {
             override fun onFailure(call: Call<ApiResponse<T>>, t: Throwable) {
@@ -122,14 +187,16 @@ class RestApiService {
             override fun onResponse( call: Call<ApiResponse<T>>, response: Response<ApiResponse<T>>) {
                 if (response.isSuccessful) {
                     val loginResult = response.body()
-                    println(loginResult)
+                    val stringResponse = response.body().toString()
+                    println(stringResponse)
                     onResult(loginResult)
                 } else {
                     val errorBody = response.errorBody()
                     if(errorBody != null) {
                         val gson = Gson()
                         val errorResponse = gson.fromJson(errorBody.string(), ApiResponse::class.java)
-                        onResult(createError(errorResponse.error.toString()))
+                        println(errorBody.string())
+                        onResult(createError(errorResponse.error.toString(), errorResponse.headers))
                     } else {
                         onResult(createError("Bilinmeyen bir hata oluştu."))
                     }

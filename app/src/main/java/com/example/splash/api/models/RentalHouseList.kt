@@ -2,12 +2,18 @@ package com.example.splash.api.models
 
 
 import com.google.gson.annotations.SerializedName
+import java.math.BigDecimal
 
-data class RentalHouseImage(@SerializedName("width")
+data class UploadedImageID(@SerializedName("id")
+                           val id: String = "",
+                           @SerializedName("images")
+                            val images: List<UploadedImage>)
+
+data class UploadedImage(@SerializedName("width")
                             val width: Int = 0,
-                            @SerializedName("url")
+                         @SerializedName("url")
                             val url: String = "",
-                            @SerializedName("height")
+                         @SerializedName("height")
                             val height: Int = 0)
 
 data class Pagination(@SerializedName("next_page")
@@ -44,13 +50,13 @@ data class Address(@SerializedName("district_name")
 data class ResultsItem(@SerializedName("min_day")
                        val minDay: Int = 0,
                        @SerializedName("images")
-                       val images: List<List<RentalHouseImage>>,
+                       val images: List<List<UploadedImage>>,
                        @SerializedName("address")
                        val address: Address,
                        @SerializedName("rent_period")
                        val rentPeriod: Int = 0,
                        @SerializedName("price")
-                       val price: Int = 0,
+                       val price: BigDecimal = BigDecimal.ZERO,
                        @SerializedName("id")
                        val id: String = "",
                        @SerializedName("commision_type")

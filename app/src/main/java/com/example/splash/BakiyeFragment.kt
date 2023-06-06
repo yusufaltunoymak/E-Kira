@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
+import com.example.splash.api.RestApiService
 import com.example.splash.databinding.FragmentBakiyeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -26,6 +27,15 @@ class BakiyeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val apiService = RestApiService(requireContext())
+        apiService.getBalance() {
+            if(it?.isSuccess == true) {
+                val balance = it.result
+                val formatBigDecimal = String.format("%.2f", balance)
+                binding.textView6.text = formatBigDecimal
+            }
+        }
 
         binding.ViewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 

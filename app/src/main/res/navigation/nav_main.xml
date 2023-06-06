@@ -13,9 +13,17 @@
         <action
             android:id="@+id/action_mainFragment_to_ilanDetayFragment"
             app:destination="@id/ilanDetayFragment" />
-        <argument
-            android:name="periyot"
-            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/rezervasyonlarFragment"
+        android:name="com.example.splash.RezervasyonlarFragment"
+        android:label="fragment_rezervasyonlar"
+        tools:layout="@layout/fragment_rezervasyonlar" >
+
+        <action
+            android:id="@+id/action_rezervasyonlarFragment_to_rezervasyonlarFragment"
+            app:destination="@id/rezervasyonlarFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -26,18 +34,17 @@
             android:id="@+id/action_profileFragment_to_profilDuzenleFragment"
             app:destination="@id/profilDuzenleFragment" />
         <action
-
             android:id="@+id/action_profileFragment_to_favoriIlan"
             app:destination="@id/favoriteFragment" />
         <action
             android:id="@+id/action_profileFragment_to_bakiyeFragment"
             app:destination="@id/bakiyeFragment" />
-
-            android:id="@+id/action_profileFragment_to_bakiyeFragment"
-            app:destination="@id/bakiyeCekFragment" />
         <action
             android:id="@+id/action_profileFragment_to_favoriteFragment"
             app:destination="@id/favoriteFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_ilanlarimFragment"
+            app:destination="@id/ilanlarimFragment" />
 
     </fragment>
     <fragment
@@ -46,53 +53,25 @@
         android:label="fragment_add"
         tools:layout="@layout/fragment_add" >
         <action
-            android:id="@+id/action_addFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <argument
-            android:name="periyot"
-            app:argType="string"
-            android:defaultValue="Null" />
+            android:id="@+id/action_addFragment_to_ilanDetayFragment"
+            app:destination="@id/ilanDetayFragment" />
     </fragment>
     <fragment
         android:id="@+id/ilanDetayFragment"
         android:name="com.example.splash.ilanDetayFragment"
         android:label="ilanDetayFragment" >
-        <argument
-            android:name="id"
-            app:argType="integer" />
-        <argument
-            android:name="baslik"
-            app:argType="string" />
-        <argument
-            android:name="kirafiyati"
-            app:argType="integer" />
-        <argument
-            android:name="periyot"
-            app:argType="string" />
-        <argument
-            android:name="cities"
-            app:argType="string" />
-        <argument
-            android:name="districts"
-            app:argType="string" />
-        <argument
-            android:name="quarters"
-            app:argType="string" />
-        <argument
-            android:name="towns"
-            app:argType="string" />
-        <argument
-            android:name="aciklama"
-            app:argType="string" />
-        <argument
-            android:name="downloadurl"
-            app:argType="android.net.Uri" />
         <action
-            android:id="@+id/ilantomain"
+            android:id="@+id/action_ilanDetayFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <action
             android:id="@+id/action_ilanDetayFragment_to_kiralaFragment"
             app:destination="@id/kiralaFragment" />
+        <action
+            android:id="@+id/action_ilanDetayFragment_to_ilanlarimFragment"
+            app:destination="@id/ilanlarimFragment" />
+        <argument
+            android:name="rentalHouseID"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/kiralaFragment"
@@ -100,13 +79,13 @@
         android:label="fragment_kirala"
         tools:layout="@layout/fragment_kirala" >
         <argument android:name="downloadurl"
-            app:argType="android.net.Uri" />
+            app:argType="string" />
         <argument
             android:name="baslik"
             app:argType="string" />
         <argument
             android:name="kirafiyati"
-            app:argType="integer" />
+            app:argType="string" />
         <argument
             android:name="aciklama"
             app:argType="string" />
@@ -119,6 +98,9 @@
         <action
             android:id="@+id/action_kiralaFragment_to_ilanDetayFragment"
             app:destination="@id/ilanDetayFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profilDuzenleFragment"
@@ -129,56 +111,6 @@
             android:id="@+id/action_profilDuzenleFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
     <fragment
         android:id="@+id/bakiyeFragment"
         android:name="com.example.splash.BakiyeFragment"
@@ -188,10 +120,6 @@
             android:id="@+id/action_bakiyeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-        android:id="@+id/bakiyeCekFragment"
-        android:name="com.example.splash.BakiyeCekFragment"
-        android:label="fragment_bakiye_cek"
-        tools:layout="@layout/fragment_bakiye_cek" />
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.splash.FavoriteFragment"
@@ -201,5 +129,16 @@
             android:id="@+id/action_favoriteFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-  
+    <fragment
+        android:id="@+id/ilanlarimFragment"
+        android:name="com.example.splash.IlanlarimFragment"
+        android:label="fragment_ilanlarim"
+        tools:layout="@layout/fragment_ilanlarim" >
+        <action
+            android:id="@+id/action_ilanlarimFragment_to_ilanDetayFragment"
+            app:destination="@id/ilanDetayFragment" />
+        <action
+            android:id="@+id/action_ilanlarimFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

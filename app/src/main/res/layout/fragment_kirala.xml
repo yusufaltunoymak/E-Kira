@@ -188,67 +188,17 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="Kira Başlangıç Tarihi Giriniz"
+                android:text="Kira Başlangıç Tarihi"
                 android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/pickupEndText"
-                android:layout_width="wrap_content"
+                android:layout_width="116dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="50dp"
                 android:gravity="center"
-                android:text="Kira Bitiş Tarihi Giriniz"
+                android:text="Kira Bitiş Tarihi"
                 android:textColor="#000000" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dateTimeField"
-            android:layout_width="378dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pickupDateTimeText">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_input"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editTextBaslangic"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableEnd="@drawable/calendar"
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:inputType="textPersonName" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/custom_input"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editTextBitis"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableEnd="@drawable/calendar"
-                    android:ems="10"
-                    android:focusableInTouchMode="false"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
         </LinearLayout>
 
         <View
@@ -259,34 +209,7 @@
             android:background="#707070"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTimeField" />
-
-        <LinearLayout
-            android:id="@+id/returnDateTimeText"
-            android:layout_width="378dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateTimeField">
-
-            <TextView
-                android:id="@+id/returnDateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Seçilen Başlangıç Tarihi"
-                android:textColor="#000000" />
-
-            <TextView
-                android:id="@+id/returnTimeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="48dp"
-                android:text="Seçilen Bitiş Tarihi"
-                android:textColor="#000000" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/pickupDateTimeText" />
 
 
         <LinearLayout
@@ -297,7 +220,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/returnDateTimeText">
+            app:layout_constraintTop_toBottomOf="@+id/divider3">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -366,7 +289,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="110dp"
         android:backgroundTint="#7A000000"
-        android:text="Ödeme yap"
+        android:text="Rezervasyon Oluştur ve Öde"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item android:id="@+id/profili_guncelle" android:title="Profili Güncelle"></item>
+    <item android:id="@+id/ilanlarim" android:title="İlanlarım"></item>
     <item android:id="@+id/favori_ilan" android:title="Favori İlanlar"></item>
     <item
         android:id="@+id/bakiye"

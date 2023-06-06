@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -25,19 +26,27 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.splash.api.RestApiService
 import com.example.splash.api.models.City
 import com.example.splash.api.models.District
 import com.example.splash.api.models.Quarter
+import com.example.splash.api.models.RentalHouseCreatePost
 import com.example.splash.api.models.Town
 import com.example.splash.databinding.FragmentAddBinding
+import com.example.splash.utils.FileUtils
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import com.vmadalin.easypermissions.EasyPermissions
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.IOException
+import java.math.BigDecimal
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,7 +58,9 @@ class AddFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private val periyot = ArrayList<String>()
+    private val comision = ArrayList<String>()
     private lateinit var veriAdaptoru : ArrayAdapter<String>
+    private lateinit var veriAdaptoru2 : ArrayAdapter<String>
 
     val Cities : MutableMap<String, Int> = mutableMapOf()
     val Towns : MutableMap<String, Int> = mutableMapOf()
@@ -78,24 +89,27 @@ class AddFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.selectImage.setOnClickListener { selectImage(view) }
+        binding.selectImage.setOnClickListener { selectImage() }
         val apiService = this@AddFragment.context?.let { RestApiService(it) }
 
         UpdateCitySpinner(true)
-
-        val bundle: AddFragmentArgs by navArgs()
-        val gelenPeriyot = bundle.periyot
 
         periyot.add("Günlük")
         periyot.add("Aylık")
         periyot.add("Yıllık")
 
-        veriAdaptoru = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,periyot)
-        binding.periyotSpinner.adapter = veriAdaptoru
+        comision.add("Kiralayan Öder")
+        comision.add("Ev Sahibi Öder")
 
+        veriAdaptoru = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,periyot)
         veriAdaptoru.insert("Kira Periyodu Seçin",0)
         binding.periyotSpinner.adapter = veriAdaptoru
         binding.periyotSpinner.setSelection(0)
+
+        veriAdaptoru2 = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,android.R.id.text1,comision)
+        veriAdaptoru2.insert("Komisyon Türü Seçin",0)
+        binding.commisionSpinner.adapter = veriAdaptoru2
+        binding.commisionSpinner.setSelection(0)
 
         binding.periyotSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -109,18 +123,65 @@ class AddFragment : Fragment() {
         }
 
         binding.submit.setOnClickListener {
-            val action = AddFragmentDirections.actionAddFragmentToMainFragment(veriAdaptoru.toString())
-            Navigation.findNavController(it).navigate(action)
+            val uploadedIds: MutableList<String> = mutableListOf()
 
-            // duzenlenecek
-            Toast.makeText(context, "İlanınız başarıyla oluşturuldu.", Toast.LENGTH_LONG).show()
+            var processedImageCount = 0
+            selectedImages.forEach { image ->
+                val filePath: String = FileUtils.GetRealPathFromUri(requireContext(), image)
+                if(filePath.isNotEmpty()) {
+                    val extension = filePath.substring(filePath.lastIndexOf("."))
+                    val fileName = "image$extension"
+                    val mimeType: String? = requireContext().contentResolver.getType(image)
+                    val file = File(filePath)
+                    val requestFile = RequestBody.create(
+                        mimeType?.let { MediaType.parse(it) },
+                        file
+                    )
+                    val filePart = MultipartBody.Part.createFormData("image", fileName, requestFile)
+                    apiService?.uploadRentalHouseImage(filePart) { uploadResult ->
+                        if (uploadResult?.isSuccess == true) {
+                            val uploadInfo = uploadResult.result
+                            uploadedIds += uploadInfo?.id.toString()
+                            println("Uploaded image: ${uploadInfo?.id}")
+                        }
+                        processedImageCount += 1
+                        // wait for all images to be uploaded
+                        if(processedImageCount == selectedImages.size) {
+                            val postData = RentalHouseCreatePost(
+                                title = binding.commentHeader.text.toString(),
+                                description = binding.commentText.text.toString(),
+                                price = BigDecimal(binding.kiraFiyati.text.toString()),
+                                commisionType = binding.commisionSpinner.selectedItemPosition-1,
+                                gCoordinate = "",
+                                imageUUIDs = uploadedIds,
+                                minDay = 1,
+                                quarterId = selectedQuarter,
+                                rentPeriod = binding.periyotSpinner.selectedItemPosition,
+                            )
+                            println("Post data: $postData")
+                            apiService.createRentalHouse(postData) { data ->
+                                if(data?.isSuccess == true) {
+                                    val result = data.result
+                                    val action = AddFragmentDirections.actionAddFragmentToIlanDetayFragment(result?.id.toString())
+                                    Navigation.findNavController(it).navigate(action)
+                                    Toast.makeText(context, "İlanınız başarıyla oluşturuldu.", Toast.LENGTH_LONG).show()
+                                } else {
+                                    println(data?.headers)
+                                    Toast.makeText(context, "İlanınız oluşturulurken bir hata oluştu: " + data?.error, Toast.LENGTH_LONG).show()
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
         apiService?.getCities() {
             if(it?.isSuccess == true) {
                 (it?.result as ArrayList<City>).forEach { city ->
-                    Cities.set(city.name, city.id)
+                    Cities[city.name] = city.id
                 }
                 UpdateCitySpinner()
             }
@@ -130,7 +191,7 @@ class AddFragment : Fragment() {
         var townSpinner : Spinner = binding.towns
         var districtSpinner : Spinner = binding.districts
         var quarterSpinner : Spinner = binding.quarters
-        citySpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        citySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -145,6 +206,8 @@ class AddFragment : Fragment() {
                     UpdateDistrictSpinner()
                     UpdateQuarterSpinner()
                     UpdateTownSpinner(true)
+                    townSpinner.requestFocusFromTouch()
+                    townSpinner.performClick();
                     apiService?.getTowns(id) {
                         if(it?.isSuccess == true) {
                             (it?.result as List<Town>).forEach { town ->
@@ -165,7 +228,7 @@ class AddFragment : Fragment() {
                 binding.submit.isEnabled = false
             }
         }
-        townSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        townSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -179,6 +242,8 @@ class AddFragment : Fragment() {
                     Quarters.clear()
                     UpdateQuarterSpinner()
                     UpdateDistrictSpinner(true)
+                    districtSpinner.requestFocusFromTouch()
+                    districtSpinner.performClick();
                     apiService?.getDistricts(id) {
                         if(it?.isSuccess == true) {
                             (it.result as List<District>).forEach { district ->
@@ -209,6 +274,8 @@ class AddFragment : Fragment() {
                     println(id)
                     Quarters.clear()
                     UpdateQuarterSpinner(true)
+                    quarterSpinner.requestFocusFromTouch()
+                    quarterSpinner.performClick();
                     apiService?.getQuarters(id) {
                         if (it?.isSuccess == true) {
                             (it.result as List<Quarter>).forEach { quarter ->
@@ -224,7 +291,7 @@ class AddFragment : Fragment() {
                 binding.submit.isEnabled = false
             }
         }
-        quarterSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        quarterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -241,7 +308,7 @@ class AddFragment : Fragment() {
 
     }
 
-    fun selectImage(view: View) {
+    fun selectImage() {
         val PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_IMAGES
         } else {
@@ -276,25 +343,14 @@ class AddFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-                println(result.data?.clipData?.itemCount)
-
-                println("resimler secildi")
-
                 // print file name and size
                 var imageChanged = false
-                var imageViews = ArrayList<ImageView>(
-                    arrayListOf(
-                        binding.miniImage1,
-                        binding.miniImage2,
-                        binding.miniImage3,
-                        binding.miniImage4,
-                        binding.miniImage5,
-                        binding.miniImage6,
-                    )
-                )
 
-                for(imageView in imageViews) {
-                    imageView.visibility = View.GONE
+                binding.miniImages.children.forEach { view ->
+                    // delete all previews
+                    if(view is ImageView) {
+                        binding.miniImages.removeView(view)
+                    }
                 }
 
                 // Image previews
@@ -308,10 +364,19 @@ class AddFragment : Fragment() {
                             binding.selectImage.scaleType = ImageView.ScaleType.CENTER_CROP
                             binding.selectImage.setImageURI(uri)
                         } else {
-                            val imageview = imageViews[i - 1]
-                            imageview.setImageURI(uri)
-                            imageview.visibility = View.VISIBLE
-                            imageview.scaleType = ImageView.ScaleType.CENTER_CROP
+                            val imageView = ImageView(requireContext())
+                            imageView.layoutParams = LinearLayout.LayoutParams(
+                                400,
+                                250
+                            )
+                            val param =
+                                imageView.layoutParams as ViewGroup.MarginLayoutParams
+                            param.setMargins(26, 15, 0, 0)
+                            imageView.adjustViewBounds = true
+                            imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                            imageView.setPadding(0, 0, 10, 0)
+                            imageView.setImageURI(uri)
+                            binding.miniImages.addView(imageView)
                         }
                     }
                 }

@@ -46,9 +46,9 @@ class RegisterActivity : AppCompatActivity() {
                     val sm = SessionManager(this@RegisterActivity)
                     val loginResult = it?.result as LoginRes
                     sm.saveAuthToken(loginResult.accessToken)
-                    val fullName = ""
-                    if(loginResult.user.firstName.isNotEmpty()) fullName.plus(loginResult.user.firstName)
-                    if(loginResult.user.lastName.isNotEmpty()) fullName.plus(" ").plus(loginResult.user.lastName)
+                    var fullName = ""
+                    if(loginResult.user.firstName.isNotEmpty()) fullName = loginResult.user.firstName
+                    if(loginResult.user.lastName.isNotEmpty()) fullName += " " + loginResult.user.lastName
                     var str: String = "Hoş Geldiniz, %s".format(
                         fullName,
                     )
@@ -94,6 +94,11 @@ class RegisterActivity : AppCompatActivity() {
         intent.putExtra("email", user.email)
         intent.putExtra("phone", user.phoneNumber)
         intent.putExtra("registerDate", user.registerDate)
+        if(user.profileImage != null) {
+            intent.putExtra("profileImage", user.profileImage.toString())
+        } else {
+            intent.putExtra("profileImage", "")
+        }
         intent.putExtra("id", user.id)
         startActivity(intent)
         finish()

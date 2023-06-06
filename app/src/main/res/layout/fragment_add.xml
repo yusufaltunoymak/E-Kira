@@ -66,75 +66,24 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:padding="5dp"
+                android:scrollbars="none"
                 android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/miniImages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- 16:9 -->
-                <ImageView
-                    android:id="@+id/miniImage1"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
-                <ImageView
-                    android:id="@+id/miniImage2"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="15dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
-                <ImageView
-                    android:id="@+id/miniImage3"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
-
-                <ImageView
-                    android:id="@+id/miniImage4"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
-
-                <ImageView
-                    android:id="@+id/miniImage5"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="26dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
-
-                <ImageView
-                    android:id="@+id/miniImage6"
-                    android:layout_width="177dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="1dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    android:paddingRight="10dp" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/miniImage1"-->
+<!--                    android:layout_width="177dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:paddingRight="10dp" />-->
 
             </LinearLayout>
 
@@ -196,11 +145,24 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
+                android:id="@+id/commisionSpinner"
+                android:layout_width="350dp"
+                android:layout_height="43dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:background="@drawable/custom_input"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectImage" />
+
+            <Spinner
                 android:id="@+id/periyotSpinner"
                 android:layout_width="350dp"
                 android:layout_height="43dp"
                 android:layout_marginStart="1dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="1dp"
                 android:background="@drawable/custom_input"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +175,7 @@
                 android:layout_width="350dp"
                 android:layout_height="43dp"
                 android:layout_marginStart="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="1dp"
                 android:background="@drawable/custom_input"

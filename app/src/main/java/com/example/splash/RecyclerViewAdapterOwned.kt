@@ -13,7 +13,7 @@ import com.example.splash.api.models.RentalHouseList
 import com.example.splash.databinding.IlanCardViewBinding
 import com.squareup.picasso.Picasso
 
-class RecyclerViewAdapter(private var adventList: RentalHouseList) : RecyclerView.Adapter<RecyclerViewAdapter.AdventHolder>() {
+class RecyclerViewAdapterOwned(private var adventList: RentalHouseList) : RecyclerView.Adapter<RecyclerViewAdapterOwned.AdventHolder>() {
     inner class AdventHolder(val binding: IlanCardViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdventHolder {
@@ -62,7 +62,7 @@ class RecyclerViewAdapter(private var adventList: RentalHouseList) : RecyclerVie
                 imageUrl = firstItemInFirstItem.url
             }
 
-            val gecis = MainFragmentDirections.actionMainFragmentToIlanDetayFragment(
+            val gecis = IlanlarimFragmentDirections.actionIlanlarimFragmentToIlanDetayFragment(
                 adventList.results[position].id
             )
 

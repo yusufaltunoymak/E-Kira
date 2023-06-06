@@ -8,6 +8,12 @@
         android:id="@+id/addFragment"
         android:icon="@drawable/ic_baseline_add_box_24"
         android:title="Ilan Ver" />
+
+    <item
+        android:id="@+id/rezervasyonlarFragment"
+        android:icon="@drawable/baseline_menu_27"
+        android:title="Reservasyonlar" />
+
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"

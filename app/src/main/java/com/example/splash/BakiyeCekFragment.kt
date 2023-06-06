@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.example.splash.R
+import com.example.splash.databinding.FragmentBakiyeCekBinding
 
 class BakiyeCekFragment : Fragment() {
 
@@ -14,7 +16,12 @@ class BakiyeCekFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        val binding = FragmentBakiyeCekBinding.inflate(inflater, container, false)
         val view = inflater.inflate(R.layout.fragment_bakiye_cek, container, false)
+
+        binding.BakiyeCekButton.setOnClickListener {
+            Toast.makeText(context, "Bakiye Çekme Talebiniz Alınmıştır.", Toast.LENGTH_SHORT).show()
+        }
 
         return view
     }
