@@ -28,8 +28,6 @@ class SplashActivity : AppCompatActivity() {
                     val apiService = RestApiService(this@SplashActivity)
                     apiService.checkAuth() {
                         if (it?.isSuccess == true) {
-                            println(it.result)
-                            println(it.result?.javaClass?.name)
                             val user = it.result
                             if (user != null) {
                                 isLogged = true
@@ -63,6 +61,11 @@ class SplashActivity : AppCompatActivity() {
         intent.putExtra("email", user.email)
         intent.putExtra("phone", user.phoneNumber)
         intent.putExtra("registerDate", user.registerDate)
+        if(user.profileImage != null) {
+            intent.putExtra("profileImage", user.profileImage.toString())
+        } else {
+            intent.putExtra("profileImage", "")
+        }
         intent.putExtra("id", user.id)
         startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

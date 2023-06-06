@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.splash.api.RestApiService
 import com.example.splash.api.models.Pagination
 import com.example.splash.api.models.RentalHouseList
-import com.example.splash.databinding.FragmentMainBinding
+import com.example.splash.databinding.FragmentIlanlarimBinding
 
-
-class MainFragment : Fragment() {
-    private lateinit var adventAdapter: RecyclerViewAdapter
-    private lateinit var binding: FragmentMainBinding
+class IlanlarimFragment : Fragment() {
+    private lateinit var adventAdapter: RecyclerViewAdapterOwned
+    private lateinit var binding: FragmentIlanlarimBinding
     private lateinit var data: RentalHouseList
 
     /* List page parameters */
@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
 
 
     ): View? {
-        binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding = FragmentIlanlarimBinding.inflate(inflater, container, false)
 
         data = RentalHouseList(
             false,
@@ -40,8 +40,13 @@ class MainFragment : Fragment() {
         getDataAPI()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adventAdapter = RecyclerViewAdapter(data)
+        adventAdapter = RecyclerViewAdapterOwned(data)
         binding.recyclerView.adapter = adventAdapter
+
+        binding.backButn.setOnClickListener {
+            val action = IlanlarimFragmentDirections.actionIlanlarimFragmentToProfileFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
 
         binding.forwardButton.setOnClickListener {
             page += 1
@@ -85,7 +90,7 @@ class MainFragment : Fragment() {
         loading()
         lockButtons()
         val apiService = RestApiService(requireContext())
-        apiService.getRentalHouseList(page, limit, sort, search, false) {
+        apiService.getRentalHouseOwnedList(page, limit, sort, search) {
             if (it?.isSuccess == true && it.result != null) {
                 val totalPage = (it.result?.pagination?.fullCount?.toFloat()?.div(limit))
                 var totalPageInt = totalPage?.toInt()

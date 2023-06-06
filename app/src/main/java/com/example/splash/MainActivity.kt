@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.databinding.ActivityMainBinding
+import com.stripe.android.PaymentConfiguration
 import com.vmadalin.easypermissions.EasyPermissions
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this,R.id.navHost)
         setupWithNavController(binding.bottomNavigationView,navController)
 
+        PaymentConfiguration.init(
+            applicationContext,
+            "pk_test_51MtVLtAyz4OGmsxH10w2wgNW3tEOCVFHuWV9FQpGWNVMou9OkBR7t78w8XoPXUG0XpdlTgR2vohSCIodCxHWbnH700eNeNhGSp"
+        )
     }
 
     fun logout(view : View) {
