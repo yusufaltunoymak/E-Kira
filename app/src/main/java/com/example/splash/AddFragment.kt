@@ -126,6 +126,11 @@ class AddFragment : Fragment() {
             val uploadedIds: MutableList<String> = mutableListOf()
 
             var processedImageCount = 0
+            if(selectedImages.size == 0) {
+                Toast.makeText(requireContext(), "Lütfen en az bir resim seçin", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             selectedImages.forEach { image ->
                 val filePath: String = FileUtils.GetRealPathFromUri(requireContext(), image)
                 if(filePath.isNotEmpty()) {
