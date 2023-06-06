@@ -6,30 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.example.splash.databinding.FragmentAddBinding
 import com.example.splash.databinding.FragmentIlanDetayBinding
-import com.example.splash.databinding.IlanCardViewBinding
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
-import io.grpc.NameResolver.Args
-import java.util.*
-
 
 class ilanDetayFragment : Fragment() {
 
     private var _binding: FragmentIlanDetayBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var storage : FirebaseStorage
-
 
     override fun onCreateView( inflater: LayoutInflater,
                                container: ViewGroup?,
@@ -38,8 +23,6 @@ class ilanDetayFragment : Fragment() {
 
         _binding = FragmentIlanDetayBinding.inflate(layoutInflater,container,false)
         val view = binding.root
-        firestore = Firebase.firestore
-        storage = Firebase.storage
 
         val nameTextView = view.findViewById(R.id.full_name) as TextView
         val emailTextView = view.findViewById(R.id.user_email) as TextView
@@ -54,9 +37,7 @@ class ilanDetayFragment : Fragment() {
         nameTextView.text = firstName
         emailTextView.text = email
 
-
         return view
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

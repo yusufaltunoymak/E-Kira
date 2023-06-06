@@ -1,9 +1,11 @@
 package com.example.splash
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -15,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -25,14 +28,15 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.example.splash.api.RestApiService
+import com.example.splash.api.models.City
+import com.example.splash.api.models.District
+import com.example.splash.api.models.Quarter
+import com.example.splash.api.models.Town
 import com.example.splash.databinding.FragmentAddBinding
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ktx.storage
+import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
+import java.io.File
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -44,10 +48,7 @@ class AddFragment : Fragment() {
     private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private val periyot = ArrayList<String>()
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var storage : FirebaseStorage
     private lateinit var veriAdaptoru : ArrayAdapter<String>
 
     val Cities : MutableMap<String, Int> = mutableMapOf()
@@ -56,10 +57,12 @@ class AddFragment : Fragment() {
     val Quarters : MutableMap<String, Int> = mutableMapOf()
     var selectedQuarter : Int = 0
 
+    private val REQUEST_CODE_ADD_IMAGE: Int = 1
+
+    private val selectedImages: ArrayList<Uri> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firestore = Firebase.firestore
-        storage = Firebase.storage
         registerLauncher()
     }
 
@@ -84,7 +87,6 @@ class AddFragment : Fragment() {
         val gelenPeriyot = bundle.periyot
 
         periyot.add("Günlük")
-        periyot.add("Haftalık")
         periyot.add("Aylık")
         periyot.add("Yıllık")
 
@@ -110,60 +112,18 @@ class AddFragment : Fragment() {
             val action = AddFragmentDirections.actionAddFragmentToMainFragment(veriAdaptoru.toString())
             Navigation.findNavController(it).navigate(action)
 
-            val uuid = UUID.randomUUID()
-            val imageName = "$uuid.jpg"
-            val reference = storage.reference
-            val imageReference = reference.child("images").child(imageName)
-
-            if (selectedPicture!=null) {
-                imageReference.putFile(selectedPicture!!).addOnSuccessListener {
-                    //download url -> firestore
-
-                    val uploadPictureReference = storage.reference.child("images").child(imageName)
-                    uploadPictureReference.downloadUrl.addOnSuccessListener {
-                        val downloadUrl = it.toString()
-                        val adventMap = hashMapOf<String,Any>()
-                        adventMap.put("downloadUrl",downloadUrl)
-                        adventMap.put("Baslik",binding.commentHeader.text.toString())
-                        adventMap.put("Aciklama",binding.commentText.text.toString())
-                        adventMap.put("KiraFiyati",binding.kiraFiyati.text.toString())
-                        adventMap.put("Periyot",binding.periyotSpinner.selectedItem.toString())
-                        adventMap.put("cities",binding.cities.selectedItem.toString())
-                        adventMap.put("towns",binding.towns.selectedItem.toString())
-                        adventMap.put("districts",binding.districts.selectedItem.toString())
-                        adventMap.put("quarters",binding.quarters.selectedItem.toString())
-                        adventMap.put("date", Timestamp.now())
-                        firestore.collection("Advents").add(adventMap).addOnSuccessListener {
-
-                        }.addOnFailureListener {
-                            Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-
-                }.addOnFailureListener {
-                    Toast.makeText(requireContext(),it.localizedMessage,Toast.LENGTH_SHORT).show()
-                }
-            }
-
-
-
-
-
-
-
-
-
-
+            // duzenlenecek
+            Toast.makeText(context, "İlanınız başarıyla oluşturuldu.", Toast.LENGTH_LONG).show()
         }
 
 
-
         apiService?.getCities() {
-            it?.result?.forEach {
-                Cities.set(it.name, it.id)
+            if(it?.isSuccess == true) {
+                (it?.result as ArrayList<City>).forEach { city ->
+                    Cities.set(city.name, city.id)
+                }
+                UpdateCitySpinner()
             }
-            UpdateCitySpinner()
         }
 
         var citySpinner : Spinner = binding.cities
@@ -186,8 +146,11 @@ class AddFragment : Fragment() {
                     UpdateQuarterSpinner()
                     UpdateTownSpinner(true)
                     apiService?.getTowns(id) {
-                        it?.result?.forEach {
-                            Towns.set(it.name, it.id)
+                        if(it?.isSuccess == true) {
+                            (it?.result as List<Town>).forEach { town ->
+                                Towns[town.name] = town.id
+                            }
+                            UpdateTownSpinner()
                         }
                         UpdateTownSpinner()
                     }
@@ -199,7 +162,7 @@ class AddFragment : Fragment() {
                     UpdateDistrictSpinner()
                     UpdateTownSpinner()
                 }
-                binding.submit.visibility = View.INVISIBLE
+                binding.submit.isEnabled = false
             }
         }
         townSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -209,7 +172,7 @@ class AddFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedItem = parent?.getItemAtPosition(position).toString()
-                var id : Int? = Towns.get(selectedItem)
+                var id : Int? = Towns[selectedItem]
                 if(position > 0 && id != null && id > 0) {
                     println(id)
                     Districts.clear()
@@ -217,8 +180,11 @@ class AddFragment : Fragment() {
                     UpdateQuarterSpinner()
                     UpdateDistrictSpinner(true)
                     apiService?.getDistricts(id) {
-                        it?.result?.forEach {
-                            Districts.set(it.name, it.id)
+                        if(it?.isSuccess == true) {
+                            (it.result as List<District>).forEach { district ->
+                                Districts[district.name] = district.id
+                            }
+                            UpdateDistrictSpinner()
                         }
                         UpdateDistrictSpinner()
                     }
@@ -228,7 +194,7 @@ class AddFragment : Fragment() {
                     UpdateQuarterSpinner()
                     UpdateDistrictSpinner()
                 }
-                binding.submit.visibility = View.INVISIBLE
+                binding.submit.isEnabled = false
             }
         }
         districtSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -244,16 +210,18 @@ class AddFragment : Fragment() {
                     Quarters.clear()
                     UpdateQuarterSpinner(true)
                     apiService?.getQuarters(id) {
-                        it?.result?.forEach {
-                            Quarters.set(it.name, it.id)
+                        if (it?.isSuccess == true) {
+                            (it.result as List<Quarter>).forEach { quarter ->
+                                Quarters[quarter.name] = quarter.id
+                            }
+                            UpdateQuarterSpinner()
                         }
-                        UpdateQuarterSpinner()
                     }
                 } else {
                     Quarters.clear()
                     UpdateQuarterSpinner()
                 }
-                binding.submit.visibility = View.INVISIBLE
+                binding.submit.isEnabled = false
             }
         }
         quarterSpinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -265,7 +233,7 @@ class AddFragment : Fragment() {
                 var selectedItem = parent?.getItemAtPosition(position).toString()
                 var id : Int? = Quarters.get(selectedItem)
                 if(position > 0 && id != null && id > 0) {
-                    binding.submit.visibility = View.VISIBLE
+                    binding.submit.isEnabled = true
                     selectedQuarter = id
                 }
             }
@@ -273,80 +241,80 @@ class AddFragment : Fragment() {
 
     }
 
-
     fun selectImage(view: View) {
-
-        activity?.let {
-            if (ContextCompat.checkSelfPermission(
-                    requireActivity().applicationContext,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(
-                        requireActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    )
-                ) {
-                    Snackbar.make(view, "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE)
-                        .setAction("Give Permission",
-                            View.OnClickListener {
-                                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            }).show()
-                } else {
-                    permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                }
-            } else {
-                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                // val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                // activityResultLauncher.launch(intentToGallery)
-
-            }
-
+        val PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
         }
 
+        if(!EasyPermissions.hasPermissions(
+                requireActivity().applicationContext,
+                PERMISSION
+        )) {
+            EasyPermissions.requestPermissions(
+                this,
+                "You need to give permission to access gallery",
+                REQUEST_CODE_ADD_IMAGE,
+                PERMISSION
+            )
+        } else{
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            activityResultLauncher.launch(Intent.createChooser(intent, "Resimleri Seçin"))
+        }
     }
 
     private fun registerLauncher() {
-        var activityResultLauncher = registerForActivityResult(
+        activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
-                val intentFromResult = result.data
-                if (intentFromResult != null) {
-                    selectedPicture = intentFromResult.data
-                    try {
-                        if (Build.VERSION.SDK_INT >= 28) {
-                            val source = ImageDecoder.createSource(
-                                requireActivity().contentResolver,
-                                selectedPicture!!
-                            )
-                            selectedBitmap = ImageDecoder.decodeBitmap(source)
-                            binding.selectImage.setImageBitmap(selectedBitmap)
+                Toast.makeText(
+                    requireActivity().applicationContext,
+                    "Resimler Seçildi",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                println(result.data?.clipData?.itemCount)
+
+                println("resimler secildi")
+
+                // print file name and size
+                var imageChanged = false
+                var imageViews = ArrayList<ImageView>(
+                    arrayListOf(
+                        binding.miniImage1,
+                        binding.miniImage2,
+                        binding.miniImage3,
+                        binding.miniImage4,
+                        binding.miniImage5,
+                        binding.miniImage6,
+                    )
+                )
+
+                for(imageView in imageViews) {
+                    imageView.visibility = View.GONE
+                }
+
+                // Image previews
+                for (i in 0 until result.data?.clipData?.itemCount!!) {
+                    val uri: Uri? = result.data?.clipData?.getItemAt(i)?.uri
+                    if (uri != null) {
+                        selectedImages.add(uri)
+
+                        if(!imageChanged) {
+                            imageChanged = true
+                            binding.selectImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                            binding.selectImage.setImageURI(uri)
                         } else {
-                            selectedBitmap = MediaStore.Images.Media.getBitmap(
-                                requireActivity().contentResolver,
-                                selectedPicture
-                            )
-                            binding.selectImage.setImageBitmap(selectedBitmap)
+                            val imageview = imageViews[i - 1]
+                            imageview.setImageURI(uri)
+                            imageview.visibility = View.VISIBLE
+                            imageview.scaleType = ImageView.ScaleType.CENTER_CROP
                         }
-                    } catch (e: IOException) {
-                        e.printStackTrace()
                     }
                 }
-            }
-        }
-        permissionLauncher = registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { result ->
-            if (result) {
-                //permission granted
-                val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-
-                activityResultLauncher.launch(intentToGallery)
-            } else {
-                //permission denied
-                Toast.makeText(requireContext(), "Permisson needed!", Toast.LENGTH_LONG)
-                    .show()
             }
         }
     }
@@ -395,8 +363,9 @@ class AddFragment : Fragment() {
             return
         }
         towns.add("İlçe Seçin")
-        if(Towns.isEmpty()) townSpinner.visibility = View.INVISIBLE
+        if(Towns.isEmpty()) townSpinner.visibility = View.GONE
         else townSpinner.visibility = View.VISIBLE
+        binding.scrollView.scrollTo(0, binding.scrollView.bottom)
         Towns.forEach { (name) ->
             towns.add(name)
         }
@@ -419,8 +388,9 @@ class AddFragment : Fragment() {
             return
         }
         districts.add("Semt Seçin")
-        if(Districts.isEmpty()) districtSpinner.visibility = View.INVISIBLE
+        if(Districts.isEmpty()) districtSpinner.visibility = View.GONE
         else districtSpinner.visibility = View.VISIBLE
+        binding.scrollView.scrollTo(0, binding.scrollView.bottom)
         Districts.forEach { (name) ->
             districts.add(name)
         }
@@ -449,8 +419,10 @@ class AddFragment : Fragment() {
             return
         }
         quarters.add("Mahalle Seçin")
-        if(Quarters.isEmpty()) quarterSpinner.visibility = View.INVISIBLE
+        if(Quarters.isEmpty()) quarterSpinner.visibility = View.GONE
         else quarterSpinner.visibility = View.VISIBLE
+        binding.scrollView.scrollTo(0, binding.scrollView.bottom)
+        binding.scrollView.scrollTo(0, binding.scrollView.bottom)
         Quarters.forEach { (name) ->
             quarters.add(name)
         }

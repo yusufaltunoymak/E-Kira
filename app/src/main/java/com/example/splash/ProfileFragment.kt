@@ -1,16 +1,23 @@
 package com.example.splash
 
 import android.os.Bundle
-import android.view.*
-import android.widget.EditText
-import androidx.fragment.app.Fragment
-import android.widget.TextView
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.splash.databinding.FragmentProfileBinding
-import androidx.appcompat.app.AppCompatActivity
-
+import org.threeten.bp.Instant
+import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.ZoneId
 
 class ProfileFragment : Fragment() {
     private lateinit var binding : FragmentProfileBinding
@@ -25,23 +32,33 @@ class ProfileFragment : Fragment() {
 
 
         // Inflate the layout for this fragment
-        val nameTextView = view2.findViewById(R.id.full_name) as TextView
-        val emailTextView = view2.findViewById(R.id.user_email) as TextView
-        var phoneTextView = view2.findViewById(R.id.user_phone) as TextView
         var firstName = this@ProfileFragment.activity?.intent?.extras?.getString("firstName")
         val lastName = this@ProfileFragment.activity?.intent?.extras?.getString("lastName")
         val email = this@ProfileFragment.activity?.intent?.extras?.getString("email")
-        val phoneNumber = this@ProfileFragment.activity?.intent?.extras?.getString("phoneNumber")
+        val phoneNumber = this@ProfileFragment.activity?.intent?.extras?.getString("phone")
+        val id = this@ProfileFragment.activity?.intent?.extras?.getString("id")
+        println("firstName: $firstName")
+        println("lastName: $lastName")
+        println("email: $email")
+        println("phoneNumber: $phoneNumber")
         if(lastName?.length!! > 0) {
             firstName = "$firstName $lastName"
         }
-        nameTextView.text = firstName
-        emailTextView.text = email
-        phoneTextView.text = phoneNumber
+        binding.fullName.text = firstName
+        binding.userEmail.text = email
+        binding.userPhone.text = phoneNumber
+        binding.textView7.text = id
 
+        // rfc3339 parse
+        val registerDate =  this@ProfileFragment.activity?.intent?.extras?.getString("registerDate")
+        if(registerDate != null) {
+            println(registerDate)
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+            val parsedDateTime = OffsetDateTime.parse(registerDate).toLocalDateTime()
+            val formattedDateTime = parsedDateTime.format(formatter)
+            binding.textView3.text = formattedDateTime
+        }
         return view2
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

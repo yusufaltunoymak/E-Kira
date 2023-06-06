@@ -8,6 +8,7 @@ class RestApiInterceptor : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
+        val currentUserAgent = System.getProperty("http.agent")
         val request: Request = chain.request()
             .newBuilder()
             .addHeader("appid", "e-kira")
@@ -16,7 +17,7 @@ class RestApiInterceptor : Interceptor {
             .removeHeader("User-Agent")
             .addHeader(
                 "User-Agent",
-                "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0"
+                currentUserAgent + " e-kira/" + BuildConfig.VERSION_NAME
             )
             .build()
         val response = chain.proceed(request)

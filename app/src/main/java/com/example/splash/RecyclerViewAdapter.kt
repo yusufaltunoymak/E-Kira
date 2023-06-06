@@ -1,20 +1,19 @@
 package com.example.splash
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
+import com.example.splash.api.RestApiService
+import com.example.splash.api.models.GetRentPeriod
+import com.example.splash.api.models.RentalHouseList
 import com.example.splash.databinding.IlanCardViewBinding
 import com.squareup.picasso.Picasso
 
-class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerView.Adapter<RecyclerViewAdapter.AdventHolder>() {
-    private lateinit var db: AdventDatabase
-    private lateinit var adventDao: AdventDao
-
-
+class RecyclerViewAdapter(private var adventList: RentalHouseList) : RecyclerView.Adapter<RecyclerViewAdapter.AdventHolder>() {
     inner class AdventHolder(val binding: IlanCardViewBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdventHolder {
@@ -23,80 +22,83 @@ class RecyclerViewAdapter(private val adventList: ArrayList<Advent>) : RecyclerV
     }
 
     override fun getItemCount(): Int {
-        return adventList.size
+        return adventList.results.size
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun UpdateData(newData: RentalHouseList) {
+        adventList = newData
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: AdventHolder, position: Int) {
-        holder.binding.ilanBaslik.text = adventList[position].Baslik
-        holder.binding.ilanFiyat.text = adventList[position].Kirafiyati
-        holder.binding.ilanKonum.text = adventList[position].cities
-        holder.binding.ilanPeriyot.text = adventList[position].Periyot
-        Picasso.get().load(adventList[position].downloadUrl).into(holder.binding.ilanGorseli)
-        db = Room.databaseBuilder(
-            holder.binding.root.context.applicationContext,
-            AdventDatabase::class.java,
-            "Advents"
-        )
-            .allowMainThreadQueries()
-            .fallbackToDestructiveMigration()
-            .build()
-        adventDao = db.adventDao()
+        holder.binding.ilanBaslik.text = adventList.results[position].title
+        holder.binding.ilanFiyat.text = adventList.results[position].price.toString()
+        val formatText = adventList.results[position].address.cityName + "\n" + adventList.results[position].address.districtName
+        holder.binding.ilanKonum.text = formatText
+        holder.binding.ilanPeriyot.text = GetRentPeriod(adventList.results[position].rentPeriod)
+
+        val apiService = RestApiService(holder.binding.root.context)
+
+        if(adventList.results[position].images.isNotEmpty()) {
+            val firstItem = adventList.results[position].images.first()
+            val lastItemInFirstItem = firstItem.last()
+            Picasso.get().load(lastItemInFirstItem.url).into(holder.binding.ilanGorseli)
+        } else {
+            holder.binding.ilanGorseli.setImageResource(R.drawable.ekira)
+        }
+
+        if(adventList.results[position].favorite) {
+            holder.binding.favoriteButton.setImageResource(R.drawable.ic_filled_heart)
+        } else {
+            holder.binding.favoriteButton.setImageResource(R.drawable.favorite)
+        }
 
         holder.binding.ilanCardView.setOnClickListener {
+            var imageUrl = ""
+            if(adventList.results[position].images.isNotEmpty()) {
+                val firstItem = adventList.results[position].images.first()
+                val firstItemInFirstItem = firstItem.first()
+                imageUrl = firstItemInFirstItem.url
+            }
+
             val gecis = MainFragmentDirections.actionMainFragmentToIlanDetayFragment(
                 position,
-                adventList[position].Baslik,
-                adventList[position].Kirafiyati.toInt(),
-                adventList[position].Periyot,
-                adventList[position].cities,
-                adventList[position].districts,
-                adventList[position].quarters,
-                adventList[position].towns,
-                adventList[position].Aciklama,
-                adventList[position].downloadUrl.toUri()
+                adventList.results[position].title,
+                adventList.results[position].price,
+                GetRentPeriod(adventList.results[position].rentPeriod),
+                adventList.results[position].address.cityName,
+                adventList.results[position].address.districtName,
+                adventList.results[position].address.quarterName,
+                adventList.results[position].address.townName,
+                "duzenlenecek",
+                imageUrl.toUri()
             )
 
             Navigation.findNavController(it).navigate(gecis)
         }
 
         // Favori durumunu kontrol et ve ikonu güncelle
-        val advent = adventList[position]
-        val isFavorite = isAdventInFavorites(advent)
-        if (isFavorite) {
-            holder.binding.favoriteButton.setImageResource(R.drawable.ic_filled_heart)
-        } else {
-            holder.binding.favoriteButton.setImageResource(R.drawable.favorite)
-        }
-
         holder.binding.favoriteButton.setOnClickListener {
-            val isFavorite = isAdventInFavorites(advent)
-
-            if (isFavorite) {
-               // removeAdventFromFavorites(advent) // Favorilerden kaldır
-               //   holder.binding.favoriteButton.setImageResource(R.drawable.favorite)
-                Toast.makeText(holder.itemView.context, "Favorilerden Kaldırıldı", Toast.LENGTH_SHORT).show()
+            if(adventList.results[position].favorite) {
+                apiService.unfavoriteRentalHouse(adventList.results[position].id) {
+                    if(it?.isSuccess == true) {
+                        holder.binding.favoriteButton.setImageResource(R.drawable.favorite)
+                        adventList.results[position].favorite = false
+                    } else {
+                        Toast.makeText(holder.itemView.context, "Favorilerden kaldırılırken bir hata oluştu", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } else {
-                addAdventToFavorites(advent) // Favorilere ekle
-                holder.binding.favoriteButton.setImageResource(R.drawable.ic_filled_heart)
-                Toast.makeText(holder.itemView.context, "Favorilere Eklendi", Toast.LENGTH_SHORT).show()
+                apiService.favoriteRentalHouse(adventList.results[position].id) {
+                    if(it?.isSuccess == true) {
+                        holder.binding.favoriteButton.setImageResource(R.drawable.ic_filled_heart)
+                        adventList.results[position].favorite = true
+                    } else {
+                        Toast.makeText(holder.itemView.context, "Favorilere eklenirken bir hata oluştu: ${it?.error}", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
-
         }
-    }
-
-
-
-    private fun isAdventInFavorites(advent: Advent): Boolean {
-        return adventDao.isAdventExist(advent.Baslik)
-    }
-
-    private fun addAdventToFavorites(advent: Advent) {
-        adventDao.insert(advent)
-    }
-
-    private fun removeAdventFromFavorites(advent: Advent) {
-        adventDao.delete(advent)
-        adventList.remove(advent)
-        notifyDataSetChanged()
     }
 }

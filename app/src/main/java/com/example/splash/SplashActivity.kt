@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.api.models.ApiResponse
-import com.example.splash.api.models.AuthCheckRes
+import com.example.splash.api.models.LoginRes
+import com.example.splash.api.models.User
 import com.example.splash.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -22,16 +23,23 @@ class SplashActivity : AppCompatActivity() {
             eKira.animate().setDuration(1000).alpha(0f).withEndAction{
                 val sm = SessionManager(this@SplashActivity)
                 val token = sm.fetchAuthToken()
+                var isLogged = false
                 if(token != null && token.length > 5) {
                     val apiService = RestApiService(this@SplashActivity)
                     apiService.checkAuth() {
                         if (it?.isSuccess == true) {
-                            mainAct(it)
-                        } else {
-                            registerAct()
+                            println(it.result)
+                            println(it.result?.javaClass?.name)
+                            val user = it.result
+                            if (user != null) {
+                                isLogged = true
+                                mainAct(user)
+                            }
                         }
                     }
-                } else {
+                }
+
+                if(!isLogged) {
                     registerAct()
                 }
             }
@@ -48,12 +56,14 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun mainAct(it : ApiResponse<AuthCheckRes>) {
+    private fun mainAct(user: User) {
         val intent = Intent(this@SplashActivity, MainActivity::class.java)
-        intent.putExtra("firstName", it?.result?.firstName)
-        intent.putExtra("lastName", it?.result?.lastName)
-        intent.putExtra("email", it?.result?.email)
-        intent.putExtra("phoneNumber", it?.result?.phoneNumber)
+        intent.putExtra("firstName", user.firstName)
+        intent.putExtra("lastName", user.lastName)
+        intent.putExtra("email", user.email)
+        intent.putExtra("phone", user.phoneNumber)
+        intent.putExtra("registerDate", user.registerDate)
+        intent.putExtra("id", user.id)
         startActivity(intent)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         finish()

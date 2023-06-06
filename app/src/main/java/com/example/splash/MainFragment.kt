@@ -6,18 +6,23 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.splash.api.RestApiService
+import com.example.splash.api.models.Pagination
+import com.example.splash.api.models.RentalHouseList
 import com.example.splash.databinding.FragmentMainBinding
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 class MainFragment : Fragment() {
     private lateinit var adventAdapter: RecyclerViewAdapter
     private lateinit var binding: FragmentMainBinding
-    private lateinit var database: FirebaseFirestore
-    private lateinit var adventArrayList: ArrayList<Advent>
+    private lateinit var data: RentalHouseList
+
+    /* List page parameters */
+    private var page: Int = 1
+    private var limit: Int = 10
+    private var sort: String = "created_at:desc"
+    private var search: String = ""
+
     override fun onCreateView(
 
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,67 +31,97 @@ class MainFragment : Fragment() {
 
     ): View? {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        database = Firebase.firestore
-        adventArrayList = ArrayList<Advent>()
-        getData()
+
+        data = RentalHouseList(
+            false,
+            Pagination(false, 0, 0, false),
+            arrayListOf()
+        )
+        getDataAPI()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adventAdapter = RecyclerViewAdapter(adventArrayList)
+        adventAdapter = RecyclerViewAdapter(data)
         binding.recyclerView.adapter = adventAdapter
 
+        binding.forwardButton.setOnClickListener {
+            page += 1
+            getDataAPI()
+        }
+
+        binding.backwardButton.setOnClickListener {
+            page -= 1
+            if(page < 1) {
+                page = 1
+            }
+            getDataAPI()
+        }
+
         return binding.root
-
-
     }
 
-    fun getData() {
-        database.collection("Advents").orderBy("date", Query.Direction.DESCENDING)
-            .addSnapshotListener { value, error ->
-                if (error != null) {
-                    Toast.makeText(requireContext(), error.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    if (value != null) {
-                        if (!value.isEmpty) {
+    private fun lockButtons() {
+        binding.forwardButton.isEnabled = false
+        binding.backwardButton.isEnabled = false
+    }
 
-                            val documents = value.documents
+    private fun unlockButtons() {
+        binding.forwardButton.isEnabled = true
+        binding.backwardButton.isEnabled = true
+    }
 
-                            adventArrayList.clear()
-                            for (document in documents) {
-                                val comment = document.get("Aciklama") as String
-                                val baslik = document.get("Baslik") as String
-                                val downloadUrl = document.get("downloadUrl") as String
-                                val kirafiyati = document.get("KiraFiyati") as String
-                                val periyot = document.get("Periyot") as String
-                                val cities = document.get("cities") as String
-                                val districts = document.get("districts") as String
-                                val quarters = document.get("quarters") as String
-                                val towns = document.get("towns") as String
+    private fun loading() {
+        binding.progressBar1.visibility = View.VISIBLE
+        binding.recyclerView.visibility = View.INVISIBLE
+    }
 
-                                val advent = Advent(
-                                    comment, baslik, kirafiyati,
-                                    periyot, cities, districts, downloadUrl,
-                                    quarters, towns
-                                )
+    private fun loaded() {
+        binding.progressBar1.visibility = View.INVISIBLE
+        binding.recyclerView.visibility = View.VISIBLE
+    }
 
-
-                                adventArrayList.add(advent)
-
-
-                            }
-                            adventAdapter.notifyDataSetChanged()
-                        }
+    private fun getDataAPI() {
+        loading()
+        lockButtons()
+        val apiService = RestApiService(requireContext())
+        apiService.getRentalHouseList(page, limit, sort, search, false) {
+            if (it?.isSuccess == true && it.result != null) {
+                val totalPage = (it.result?.pagination?.fullCount?.toFloat()?.div(limit))
+                var totalPageInt = totalPage?.toInt()
+                if (totalPage != null) {
+                    if (totalPage % 1 != 0f) {
+                        totalPageInt = totalPage.toInt() + 1
                     }
                 }
+                val pageText = "${page}/${totalPageInt}"
+                binding.pageIndicator.text = pageText
+                if(it.result?.pagination?.nextPage == true) {   // if next page exists
+                    binding.forwardButton.visibility = View.VISIBLE
+                } else {
+                    binding.forwardButton.visibility = View.INVISIBLE
+                }
+                if(it.result?.pagination?.prevPage == true) {   // if prev page exists
+                    binding.backwardButton.visibility = View.VISIBLE
+                } else {
+                    binding.backwardButton.visibility = View.INVISIBLE
+                }
+                it.result?.fetched = true
+                adventAdapter.UpdateData(it.result as RentalHouseList)
+                unlockButtons()
+                loaded()
+                // scroll to top
+                binding.recyclerView.scrollToPosition(0)
+            } else {
+                Toast.makeText(requireContext(), it?.error.toString(), Toast.LENGTH_SHORT)
+                    .show()
+                unlockButtons()
+                loaded()
             }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager
-
-
-
     }
 }

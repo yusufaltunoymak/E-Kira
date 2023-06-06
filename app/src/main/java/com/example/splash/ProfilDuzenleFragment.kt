@@ -19,8 +19,6 @@ class ProfilDuzenleFragment : Fragment() {
     private lateinit var binding : FragmentProfilDuzenleBinding
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,12 +55,9 @@ class ProfilDuzenleFragment : Fragment() {
                 if (it?.isSuccess == true) {
                     binding.DogrulaButton.visibility = View.VISIBLE
                     binding.editTextNumber.visibility = View.VISIBLE
-
-                    println(it?.result)
+                    Toast.makeText(requireContext(), "Telefon numaranıza doğrulama kodu gönderildi", Toast.LENGTH_LONG).show()
                 } else {
-                    println(it)
-                    println(it?.error)
-                   // Toast.makeText(this@ProfilDuzenleFragment, it?.error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it?.error.toString(), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -83,15 +78,10 @@ class ProfilDuzenleFragment : Fragment() {
 
             var data = VerifyPhonePost(phone = phone, code = code)
             apiService?.verifyPhone(data) {
-                println(it)
                 if (it?.isSuccess == true) {
-                    println(it?.result)
-                    Toast.makeText(requireContext(), it?.isSuccess.toString(), Toast.LENGTH_LONG).show()
-
+                    Toast.makeText(requireContext(), "Telefon numarası doğrulandı", Toast.LENGTH_LONG).show()
                 } else {
-                    println(it?.error)
-
-                Toast.makeText(requireContext(), it?.error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it?.error.toString(), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -109,14 +99,13 @@ class ProfilDuzenleFragment : Fragment() {
 
             val data = SetProfile(first_name = firstName, last_name = lastName)
             apiService?.setProfile(data) {
-                println(it)
                 if (it?.isSuccess == true) {
-                    this@ProfilDuzenleFragment.activity?.intent?.extras?.putString("firstName", it?.result?.first_name)
-                    this@ProfilDuzenleFragment.activity?.intent?.extras?.putString("lastName", it?.result?.last_name)
-                    println(it?.result)
+                    val profileInfo = it.result as SetProfile
+                    this@ProfilDuzenleFragment.activity?.intent?.extras?.putString("firstName", profileInfo.first_name)
+                    this@ProfilDuzenleFragment.activity?.intent?.extras?.putString("lastName", profileInfo.last_name)
+                    Toast.makeText(requireContext(), "Profil bilgileriniz güncellendi", Toast.LENGTH_LONG).show()
                 } else {
-                    println(it?.error)
-                    // Toast.makeText(this@ProfilDuzenleFragment, it?.error.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), it?.error.toString(), Toast.LENGTH_LONG).show()
                 }
             }
         }

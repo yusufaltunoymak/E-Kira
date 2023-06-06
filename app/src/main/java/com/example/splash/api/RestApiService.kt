@@ -1,8 +1,8 @@
 package com.example.splash.api
 
 import android.content.Context
-import com.example.splash.ProfilDuzenleFragment
 import com.example.splash.api.models.*
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,250 +18,123 @@ class RestApiService {
     fun loginPost(data: LoginPost, onResult: (ApiResponse<LoginRes>?) -> Unit){
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.loginPost(data).enqueue(
-            object : Callback<ApiResponse<LoginRes>> {
-                override fun onFailure(call: Call<ApiResponse<LoginRes>>, t: Throwable) {
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = LoginRes(user = User(), accessToken = "")
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<LoginRes>>, response: Response<ApiResponse<LoginRes>>) {
-                    println(response.body().toString())
-                    val loginResult = response.body()
-                    println(loginResult)
-                    onResult(loginResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun registerPost(data: RegisterPost, onResult: (ApiResponse<RegisterRes>?) -> Unit){
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.registerPost(data).enqueue(
-            object : Callback<ApiResponse<RegisterRes>> {
-                override fun onFailure(call: Call<ApiResponse<RegisterRes>>, t: Throwable) {
-                    println(t.message)
-                    onResult(null)
-                }
-                override fun onResponse( call: Call<ApiResponse<RegisterRes>>, response: Response<ApiResponse<RegisterRes>>) {
-                    println(response.body().toString())
-                    val loginResult = response.body()
-                    println(loginResult)
-                    onResult(loginResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
-    fun checkAuth(onResult: (ApiResponse<AuthCheckRes>?) -> Unit) {
+    fun checkAuth(onResult: (ApiResponse<User>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.checkAuth().enqueue(
-            object : Callback<ApiResponse<AuthCheckRes>> {
-                override fun onFailure(call: Call<ApiResponse<AuthCheckRes>>, t: Throwable) {
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = AuthCheckRes()
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<AuthCheckRes>>, response: Response<ApiResponse<AuthCheckRes>>) {
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun getCities(onResult: (ApiResponse<List<City>>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.getCities().enqueue(
-            object : Callback<ApiResponse<List<City>>> {
-                override fun onFailure(call: Call<ApiResponse<List<City>>>, t: Throwable) {
-                    println("getCities Fail")
-                    var d : List<City> = listOf()
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = d
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<List<City>>>, response: Response<ApiResponse<List<City>>>) {
-                    println("getCities onResponse")
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun getTowns(cityId : Int, onResult: (ApiResponse<List<Town>>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.getTowns(cityId).enqueue(
-            object : Callback<ApiResponse<List<Town>>> {
-                override fun onFailure(call: Call<ApiResponse<List<Town>>>, t: Throwable) {
-                    println("getTowns Fail")
-                    var d : List<Town> = listOf()
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = d
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<List<Town>>>, response: Response<ApiResponse<List<Town>>>) {
-                    println("getTowns onResponse")
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun getDistricts(townId : Int, onResult: (ApiResponse<List<District>>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.getDistricts(townId).enqueue(
-            object : Callback<ApiResponse<List<District>>> {
-                override fun onFailure(call: Call<ApiResponse<List<District>>>, t: Throwable) {
-                    var d : List<District> = listOf()
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = d
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<List<District>>>, response: Response<ApiResponse<List<District>>>) {
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun getQuarters(districtId : Int, onResult: (ApiResponse<List<Quarter>>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.getQuarters(districtId).enqueue(
-            object : Callback<ApiResponse<List<Quarter>>> {
-                override fun onFailure(call: Call<ApiResponse<List<Quarter>>>, t: Throwable) {
-                    var d : List<Quarter> = listOf()
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = d
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<List<Quarter>>>, response: Response<ApiResponse<List<Quarter>>>) {
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun logoutAuth(onResult: (ApiResponse<String>?) -> Unit) {
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.logoutAuth().enqueue(
-            object : Callback<ApiResponse<String>> {
-                override fun onFailure(call: Call<ApiResponse<String>>, t: Throwable) {
-                    println(t.message)
-                    //onResult(null)
-                    onResult(ApiResponse(
-                        isSuccess = false,
-                        error = t.message.toString(),
-                        headers = null,
-                        result = "NO",
-                    ))
-                }
-                override fun onResponse( call: Call<ApiResponse<String>>, response: Response<ApiResponse<String>>) {
-                    println(response.body().toString())
-                    val authResult = response.body()
-                    println(authResult)
-                    onResult(authResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
-    fun setPhone(data: SetPhonePost, onResult: (ApiResponse<SetPhoneResult>?) -> Unit){
+    fun setPhone(data: SetPhonePost, onResult: (ApiResponse<SetPhoneResult>?)-> Unit){
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.setPhone(data).enqueue(
-            object : Callback<ApiResponse<SetPhoneResult>> {
-                override fun onFailure(call: Call<ApiResponse<SetPhoneResult>>, t: Throwable) {
-                    println(t.message)
-                    println(t)
-                    onResult(null)
-                }
-                override fun onResponse( call: Call<ApiResponse<SetPhoneResult>>, response: Response<ApiResponse<SetPhoneResult>>) {
-                    println(response.body().toString())
-                    val loginResult = response.body()
-                    println(loginResult)
-                    onResult(loginResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
-    fun verifyPhone(data: VerifyPhonePost, onResult: (ApiResponse<VerifyPhoneResult>?) -> Unit){
+    fun verifyPhone(data: VerifyPhonePost, onResult: (ApiResponse<VerifyPhoneResult>?)-> Unit){
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.verifyPhone(data).enqueue(
-            object : Callback<ApiResponse<VerifyPhoneResult>> {
-                override fun onFailure(call: Call<ApiResponse<VerifyPhoneResult>>, t: Throwable) {
-                    println(t.message.toString())
-                    println(t)
-                    onResult(null)
-                }
-                override fun onResponse( call: Call<ApiResponse<VerifyPhoneResult>>, response: Response<ApiResponse<VerifyPhoneResult>>) {
-                    println(response.body().toString())
-                    val loginResult = response.body()
-                    println(loginResult)
-                    onResult(loginResult)
-                }
-            }
+            createCallback(onResult)
         )
     }
 
     fun setProfile(data: SetProfile, onResult: (ApiResponse<SetProfile>?) -> Unit){
         val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
         retrofit.setProfile(data).enqueue(
-            object : Callback<ApiResponse<SetProfile>> {
-                override fun onFailure(call: Call<ApiResponse<SetProfile>>, t: Throwable) {
-                    println(t.message.toString())
-                    onResult(null)
-                }
-                override fun onResponse( call: Call<ApiResponse<SetProfile>>, response: Response<ApiResponse<SetProfile>>) {
-                    println(response.body().toString())
+            createCallback(onResult)
+        )
+    }
+
+    fun getRentalHouseList(page: Int, limit: Int, sort: String, search: String, onlyFavorite: Boolean, onResult: (ApiResponse<RentalHouseList>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.getRentalHouseList(page, limit, sort, search, onlyFavorite).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun favoriteRentalHouse(id: String, onResult: (ApiResponse<String>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.favoriteRentalHouse(id).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    fun unfavoriteRentalHouse(id: String, onResult: (ApiResponse<String>?) -> Unit) {
+        val retrofit = ServiceBuilder(this.mContext).buildService(RestApi::class.java)
+        retrofit.unfavoriteRentalHouse(id).enqueue(
+            createCallback(onResult)
+        )
+    }
+
+    private fun <T> createCallback(onResult: (ApiResponse<T>?) -> Unit) : Callback<ApiResponse<T>> {
+        return object : Callback<ApiResponse<T>> {
+            override fun onFailure(call: Call<ApiResponse<T>>, t: Throwable) {
+                println(t.message.toString())
+                onResult(createError(t.message.toString()))
+            }
+            override fun onResponse( call: Call<ApiResponse<T>>, response: Response<ApiResponse<T>>) {
+                if (response.isSuccessful) {
                     val loginResult = response.body()
                     println(loginResult)
                     onResult(loginResult)
+                } else {
+                    val errorBody = response.errorBody()
+                    if(errorBody != null) {
+                        val gson = Gson()
+                        val errorResponse = gson.fromJson(errorBody.string(), ApiResponse::class.java)
+                        onResult(createError(errorResponse.error.toString()))
+                    } else {
+                        onResult(createError("Bilinmeyen bir hata oluştu."))
+                    }
                 }
             }
-        )
+        }
     }
 }

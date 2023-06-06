@@ -1,9 +1,12 @@
 package com.example.splash.api.models
 
-import com.google.gson.annotations.SerializedName;
+import org.json.JSONObject
 
-data class ApiError(
-        @SerializedName("error") val error: String = "",
-        @SerializedName("isSuccess") val isSuccess: Boolean = false,
-        @SerializedName("statusCode") val statusCode: Int = 0
-)
+fun <T> createError(error: String): ApiResponse<T> {
+    return ApiResponse(
+        result = null,
+        headers = null,
+        error = error,
+        isSuccess = false
+    )
+}

@@ -10,10 +10,18 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.splash.api.RestApiService
 import com.example.splash.api.SessionManager
 import com.example.splash.databinding.ActivityMainBinding
+import com.vmadalin.easypermissions.EasyPermissions
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController : NavController
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Main)
