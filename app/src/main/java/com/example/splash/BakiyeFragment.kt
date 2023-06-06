@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
 import com.example.splash.api.RestApiService
@@ -34,6 +35,9 @@ class BakiyeFragment : Fragment() {
                 val balance = it.result
                 val formatBigDecimal = String.format("%.2f", balance)
                 binding.textView6.text = formatBigDecimal
+            } else {
+                binding.textView6.text = "0.00"
+                Toast.makeText(context, "Bakiye bilgisi alınamadı: " + it?.error, Toast.LENGTH_SHORT).show()
             }
         }
 
